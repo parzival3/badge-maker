@@ -198,7 +198,7 @@
       shrinkToFit(n, 10.5, 6);
     });
     el.preview.querySelectorAll('.badge-main').forEach(function (main) {
-      fitName(main.querySelector('.badge-name'), main, 36, 8);
+      fitName(main.querySelector('.badge-name'), main, 28, 8);
     });
 
     save();

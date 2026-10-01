@@ -71,7 +71,7 @@
 }
 
 .badge-name {
-  font-size: 36pt;             /* a starting point; app.js fits it to the box */
+  font-size: 28pt;             /* a starting point; app.js fits it to the box */
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: 0.005em;
