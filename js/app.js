@@ -105,37 +105,50 @@
     logo.alt = '';
     badge.appendChild(logo);
 
-    var box = document.createElement("div");
-    box.className = "badge-name-box";
-    var name = document.createElement("div");
-    name.className = "badge-name";
-    name.textContent = person ? person.name : "placeholder";
-    box.appendChild(name);
-    badge.appendChild(box);
+    var main = document.createElement('div');
+    main.className = 'badge-main';
 
-    // When anyone on the sheet has a role, every badge reserves the line —
-    // otherwise names would sit at different heights from badge to badge.
+    var box = document.createElement('div');
+    box.className = 'badge-name-box';
+    var name = document.createElement('div');
+    name.className = 'badge-name';
+    name.textContent = person ? person.name : 'placeholder';
+    box.appendChild(name);
+    main.appendChild(box);
+
+    // When anyone on the sheet has a role, every badge reserves the line, so
+    // names sit at the same height from badge to badge.
     if (showSub) {
       var sub = document.createElement('div');
       sub.className = 'badge-sub';
-      sub.textContent = (person && person.sub) || ' ';
-      badge.appendChild(sub);
+      sub.textContent = (person && person.sub) || ' ';
+      main.appendChild(sub);
     }
+
+    badge.appendChild(main);
     return badge;
   }
 
-  // Step the font down until the name fits its box in BOTH directions. The
-  // name may wrap, so a long "First Surname" lands on two lines at a readable
-  // size rather than being squeezed onto one tiny line.
-  function fitToBox(node, box, startPt, minPt) {
-    var pt = startPt;
-    for (;;) {
+  // Pick the largest font size at which the name still fits the space the logo
+  // and role line leave behind. The name may wrap, so a long "First Surname"
+  // lands on two lines at a readable size rather than being squeezed onto one
+  // tiny line. Measuring the rendered text beats guessing from the character
+  // count: "WILHELMINA" and "iiiiiiiiii" are the same length but not the same
+  // width.
+  function fitName(node, main, startPt, minPt) {
+    // collapse the text first so it cannot inflate the box we are measuring
+    node.style.fontSize = minPt + 'pt';
+
+    var sub = main.querySelector('.badge-sub');
+    var gap = parseFloat(getComputedStyle(main).rowGap) || 0;
+    var maxW = main.clientWidth;
+    var maxH = main.clientHeight - (sub ? sub.offsetHeight + gap : 0);
+
+    for (var pt = startPt; pt > minPt; pt -= 0.5) {
       node.style.fontSize = pt + 'pt';
-      if (pt <= minPt) return;
-      if (node.scrollWidth <= box.clientWidth + 0.5 &&
-          node.scrollHeight <= box.clientHeight + 0.5) return;
-      pt -= 0.5;
+      if (node.scrollWidth <= maxW + 0.5 && node.scrollHeight <= maxH + 0.5) return;
     }
+    node.style.fontSize = minPt + 'pt';
   }
 
   // The role line stays on one line; shrink it against its own width.
@@ -184,8 +197,8 @@
     el.preview.querySelectorAll('.badge-sub').forEach(function (n) {
       shrinkToFit(n, 10.5, 6);
     });
-    el.preview.querySelectorAll('.badge-name-box').forEach(function (box) {
-      fitToBox(box.firstChild, box, 24, 8);
+    el.preview.querySelectorAll('.badge-main').forEach(function (main) {
+      fitName(main.querySelector('.badge-name'), main, 24, 8);
     });
 
     save();

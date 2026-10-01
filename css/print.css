@@ -32,7 +32,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;   /* logo sits at the top, name fills the rest */
-  gap: 2mm;
+  gap: 1.5mm;
   padding: 4mm 5mm 5mm;
   text-align: center;
 }
@@ -46,17 +46,27 @@
   max-height: 8mm;
   object-fit: contain;
   flex: none;
+  align-self: flex-end;        /* top-right corner of the badge */
 }
 
-/* The name gets every millimetre the logo and role line do not use; the
-   fit routine in app.js grows the text to fill this box. */
-.badge-name-box {
+/* Everything the logo leaves behind. Name and role are centred together as
+   one block, so the role sits directly under the name. */
+.badge-main {
   flex: 1 1 auto;
   min-height: 0;
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1.5mm;
+  overflow: hidden;
+}
+
+.badge-name-box {
+  flex: 0 1 auto;
+  min-height: 0;
+  width: 100%;
   overflow: hidden;
 }
 
