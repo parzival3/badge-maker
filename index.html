@@ -36,12 +36,15 @@
   <div class="field">
     <label class="check"><input type="checkbox" id="showSub" checked> Show role line</label>
     <label class="check"><input type="checkbox" id="showMarks" checked> Show cut lines</label>
+    <label class="check"><input type="checkbox" id="showRuler" checked> Print a 100 mm scale check</label>
   </div>
 
   <p class="count" id="count">0 names</p>
   <button id="print" class="print-btn">Print / Save as PDF</button>
-  <p class="warn">In the print dialog set <b>Scale 100 %</b>, <b>Margins: None</b>
-    and enable <b>Background graphics</b>, or the badges come out the wrong size.</p>
+  <p class="warn">The page sets the paper size and margins itself, so the browser
+    defaults are already right. The only thing worth a glance is that <b>Scale</b>
+    reads <b>100&nbsp;%</b> and not &ldquo;Fit to page&rdquo;. Hold a ruler against the
+    100&nbsp;mm bar printed at the foot of the sheet to be sure.</p>
 </aside>
 
 <main class="preview" id="preview"></main>

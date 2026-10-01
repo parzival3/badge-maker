@@ -13,6 +13,7 @@
     fileHint: document.getElementById('fileHint'),
     showSub: document.getElementById('showSub'),
     showMarks: document.getElementById('showMarks'),
+    showRuler: document.getElementById('showRuler'),
     count: document.getElementById('count'),
     print: document.getElementById('print'),
     preview: document.getElementById('preview')
@@ -189,6 +190,14 @@
         // empty trailing slots keep the cut lines on the last sheet aligned
         sheet.appendChild(makeBadge(people[s * PER_SHEET + i] || null, showSub));
       }
+      if (el.showRuler.checked) {
+        var ruler = document.createElement('div');
+        ruler.className = 'sheet-ruler';
+        var tag = document.createElement('span');
+        tag.textContent = 'this bar should measure 100 mm; if it does not, your print scale is not 100 %';
+        ruler.appendChild(tag);
+        sheet.appendChild(ruler);
+      }
       el.preview.appendChild(sheet);
     }
 
@@ -212,7 +221,8 @@
         names: el.names.value,
         size: sizeInput().value,
         showSub: el.showSub.checked,
-        showMarks: el.showMarks.checked
+        showMarks: el.showMarks.checked,
+        showRuler: el.showRuler.checked
       }));
     } catch (e) { /* private mode — not worth bothering the user about */ }
   }
@@ -224,6 +234,7 @@
     el.names.value = saved.names || '';
     el.showSub.checked = saved.showSub !== false;
     el.showMarks.checked = saved.showMarks !== false;
+    el.showRuler.checked = saved.showRuler !== false;
     var radio = document.querySelector('input[name=size][value="' + saved.size + '"]');
     if (radio) radio.checked = true;
   }
@@ -233,6 +244,7 @@
   el.names.addEventListener('input', render);
   el.showSub.addEventListener('change', render);
   el.showMarks.addEventListener('change', render);
+  el.showRuler.addEventListener('change', render);
   document.querySelectorAll('input[name=size]').forEach(function (r) {
     r.addEventListener('change', render);
   });

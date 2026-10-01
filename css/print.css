@@ -6,6 +6,7 @@
 @page { size: A4 portrait; margin: 0; }
 
 .sheet {
+  position: relative;          /* anchors the 100 mm scale check */
   --bw: 85mm;           /* overridden by .size-90 */
   --bh: 54mm;
   box-sizing: border-box;
@@ -90,6 +91,32 @@
 }
 
 .badge.empty > * { visibility: hidden; }
+
+/* A 100 mm reference bar in the sheet margin. If the browser scales the page,
+   this stops measuring 100 mm and the error is obvious before you cut. */
+.sheet-ruler {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 4mm;
+  width: 100mm;
+  height: 2mm;
+  border: 0.2mm solid #9aa3ad;
+  border-top: 0;
+  color: #9aa3ad;
+  font-size: 6pt;
+  line-height: 1;
+}
+
+.sheet-ruler span {
+  position: absolute;
+  left: 50%;
+  bottom: 2.4mm;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 0 1mm;
+  white-space: nowrap;
+}
 
 /* ---------------------------------------------------------------- */
 

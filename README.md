@@ -26,20 +26,20 @@ your name list anywhere: everything runs locally in the page.
 4. Cut along the dashed lines. Badges are laid out edge to edge, so each cut
    line is shared between two badges — one pass of the guillotine per line.
 
-### Print settings that matter
+### Print settings
 
-In the print dialog set:
+The page declares the paper and margins itself
+(`@page { size: A4 portrait; margin: 0 }`), so the browser defaults are already
+correct — verified by printing with headers, footers and background graphics
+left at their defaults, which produces byte-identical geometry.
 
-| Setting | Value |
-|---|---|
-| Scale | **100 %** (not "Fit to page") |
-| Margins | **None** |
-| Background graphics | **On** |
-| Paper | A4 |
+The one setting a web page is not allowed to control is **Scale**. It defaults
+to 100 %, but if it ever reads "Fit to page" the whole sheet shrinks by a few
+percent and the badges stop matching your badge holders.
 
-With "Fit to page" the browser shrinks the sheet by a few percent and the badges
-no longer match your badge holders. Measure one printed badge with a ruler the
-first time.
+So each sheet prints a **100 mm reference bar** at its foot. Hold a ruler
+against it once: if it measures 100 mm, every badge on the sheet is correct.
+Untick "Print a 100 mm scale check" to leave it off.
 
 ## Spreadsheet format
 
