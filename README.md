@@ -92,3 +92,38 @@ python3 -m http.server 8000
 Open `test/parse-test.html` in a browser (or
 `firefox --headless --screenshot out.png test/parse-test.html`) — it exercises the
 line and spreadsheet parsers and prints a pass/fail list.
+
+## Changing the badge size / adding a label-sheet preset
+
+The current sizes assume **full-sheet** paper or sticker paper that you cut
+yourself: badges are laid out edge to edge with no gaps, centred on the page.
+Die-cut label sheets (Avery and similar) instead have a fixed sheet margin
+*and* a gap between labels, so they need those numbers too.
+
+To add a size, three edits:
+
+1. **`index.html`** — another radio next to the existing ones:
+   ```html
+   <label><input type="radio" name="size" value="99"> 99.1 × 57 mm</label>
+   ```
+2. **`css/print.css`** — the matching dimensions. The class name is
+   `size-` plus the radio's `value`; `app.js` puts it on `<body>`:
+   ```css
+   .size-99 .sheet { --bw: 99.1mm; --bh: 57mm; }
+   ```
+   For a die-cut sheet, also set the sheet padding and grid gap for that size,
+   e.g. `.size-99 .sheet { padding: 13mm 5.5mm; gap: 0 2.5mm; }` — take the
+   margin and pitch straight off the label pack, and switch
+   `justify-content` / `align-content` from `center` to `start` so the grid
+   anchors to that margin instead of being re-centred.
+3. **`js/app.js`** — nothing, as long as the grid still holds 10 badges.
+   For a different count, change `PER_SHEET` (and make it per-size if your
+   presets differ).
+
+Verify any new size by printing to PDF and measuring, not by eye:
+
+```sh
+chromium --headless --no-pdf-header-footer --print-to-pdf=out.pdf index.html
+pdfinfo out.pdf          # must say 594.96 x 841.92 pts (A4)
+pdftotext -bbox out.pdf -  # compare word positions between columns/rows
+```
