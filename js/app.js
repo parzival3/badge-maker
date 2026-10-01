@@ -105,21 +105,40 @@
     logo.alt = '';
     badge.appendChild(logo);
 
-    var name = document.createElement('div');
-    name.className = 'badge-name';
-    name.textContent = person ? person.name : 'placeholder';
-    badge.appendChild(name);
+    var box = document.createElement("div");
+    box.className = "badge-name-box";
+    var name = document.createElement("div");
+    name.className = "badge-name";
+    name.textContent = person ? person.name : "placeholder";
+    box.appendChild(name);
+    badge.appendChild(box);
 
-    if (showSub && person && person.sub) {
+    // When anyone on the sheet has a role, every badge reserves the line —
+    // otherwise names would sit at different heights from badge to badge.
+    if (showSub) {
       var sub = document.createElement('div');
       sub.className = 'badge-sub';
-      sub.textContent = person.sub;
+      sub.textContent = (person && person.sub) || ' ';
       badge.appendChild(sub);
     }
     return badge;
   }
 
-  // Step the font down until the (nowrap) text fits its badge.
+  // Step the font down until the name fits its box in BOTH directions. The
+  // name may wrap, so a long "First Surname" lands on two lines at a readable
+  // size rather than being squeezed onto one tiny line.
+  function fitToBox(node, box, startPt, minPt) {
+    var pt = startPt;
+    for (;;) {
+      node.style.fontSize = pt + 'pt';
+      if (pt <= minPt) return;
+      if (node.scrollWidth <= box.clientWidth + 0.5 &&
+          node.scrollHeight <= box.clientHeight + 0.5) return;
+      pt -= 0.5;
+    }
+  }
+
+  // The role line stays on one line; shrink it against its own width.
   function shrinkToFit(node, startPt, minPt) {
     var pt = startPt;
     node.style.fontSize = pt + 'pt';
@@ -131,7 +150,8 @@
 
   function render() {
     var people = parsePeople(el.names.value);
-    var showSub = el.showSub.checked;
+    // no point reserving the role line if nobody has a role
+    var showSub = el.showSub.checked && people.some(function (p) { return !!p.sub; });
 
     document.body.className = 'size-' + sizeInput().value + (el.showMarks.checked ? ' marks' : '');
 
@@ -159,8 +179,14 @@
       el.preview.appendChild(sheet);
     }
 
-    el.preview.querySelectorAll('.badge-name').forEach(function (n) { shrinkToFit(n, 16, 8); });
-    el.preview.querySelectorAll('.badge-sub').forEach(function (n) { shrinkToFit(n, 9.5, 6); });
+    // Size the role line first: it is flex: none, so its final height decides
+    // how much room is left for the name box.
+    el.preview.querySelectorAll('.badge-sub').forEach(function (n) {
+      shrinkToFit(n, 10.5, 6);
+    });
+    el.preview.querySelectorAll('.badge-name-box').forEach(function (box) {
+      fitToBox(box.firstChild, box, 24, 8);
+    });
 
     save();
   }

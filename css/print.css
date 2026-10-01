@@ -31,9 +31,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 3mm;
-  padding: 5mm 5mm 6mm;
+  justify-content: flex-start;   /* logo sits at the top, name fills the rest */
+  gap: 2mm;
+  padding: 4mm 5mm 5mm;
   text-align: center;
 }
 
@@ -42,24 +42,37 @@
 .marks .badge { outline: 0.2mm dashed #9aa3ad; outline-offset: -0.1mm; }
 
 .badge-logo {
-  width: 52mm;
-  max-height: 12mm;
+  width: 34mm;
+  max-height: 8mm;
   object-fit: contain;
   flex: none;
 }
 
+/* The name gets every millimetre the logo and role line do not use; the
+   fit routine in app.js grows the text to fill this box. */
+.badge-name-box {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
 .badge-name {
-  font-size: 16pt;
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: 0.01em;
-  color: #123f6b;              /* matches the logo's blue */
-  white-space: nowrap;         /* the auto-shrink in app.js relies on this */
+  font-size: 24pt;             /* a starting point; app.js fits it to the box */
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.005em;
+  color: #123f6b;              /* matches the logo blue */
+  text-wrap: balance;          /* split "First Surname" evenly over two lines */
   max-width: 100%;
 }
 
 .badge-sub {
-  font-size: 9.5pt;
+  font-size: 10.5pt;
+  flex: none;
   line-height: 1.2;
   color: #5b6672;
   white-space: nowrap;
