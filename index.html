@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Badge Maker — printable A4 name badges</title>
+<link rel="icon" href="assets/logo.svg">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/print.css">
+</head>
+<body>
+
+<aside class="panel">
+  <h1>Badge Maker</h1>
+
+  <label class="field">
+    <span class="label">Names <small>one per line — <code>Name, Role</code> for a second line</small></span>
+    <textarea id="names" rows="14" spellcheck="false" placeholder="Jane Doe, Volunteer&#10;Ram Thapa&#10;Sita Gurung, Coordinator"></textarea>
+  </label>
+
+  <div class="field">
+    <span class="label">…or load a spreadsheet</span>
+    <input type="file" id="file" accept=".xlsx,.xls,.csv,.ods">
+    <p class="hint" id="fileHint">First sheet. A <code>Name</code> / <code>Role</code> header row is detected,
+      otherwise column A is the name and column B the role.</p>
+  </div>
+
+  <div class="field">
+    <span class="label">Badge size</span>
+    <div class="radios">
+      <label><input type="radio" name="size" value="85" checked> 85 × 54 mm</label>
+      <label><input type="radio" name="size" value="90"> 90 × 54 mm</label>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="check"><input type="checkbox" id="showSub" checked> Show role line</label>
+    <label class="check"><input type="checkbox" id="showMarks" checked> Show cut lines</label>
+  </div>
+
+  <p class="count" id="count">0 names</p>
+  <button id="print" class="print-btn">Print / Save as PDF</button>
+  <p class="warn">In the print dialog set <b>Scale 100 %</b>, <b>Margins: None</b>
+    and enable <b>Background graphics</b>, or the badges come out the wrong size.</p>
+</aside>
+
+<main class="preview" id="preview"></main>
+
+<script src="js/vendor/xlsx.full.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

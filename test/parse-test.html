@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Badge Maker — parser tests</title>
+<style>
+ body { font: 14px/1.6 ui-monospace, monospace; padding: 20px; }
+ .pass { color: #1a7f37; } .fail { color: #c7254e; font-weight: 700; }
+ pre { margin: 2px 0 10px 24px; color: #555; white-space: pre-wrap; }
+ #summary { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<div id="summary">running…</div>
+<div id="out"></div>
+
+<!-- load the real app in a hidden iframe-free way: the app needs its DOM,
+     so we reuse index.html's controls by importing the same scripts into a
+     minimal stub of the elements app.js looks up -->
+<div hidden>
+  <textarea id="names"></textarea>
+  <input type="file" id="file"><p id="fileHint"></p>
+  <input type="checkbox" id="showSub" checked><input type="checkbox" id="showMarks" checked>
+  <p id="count"></p><button id="print"></button><div id="preview"></div>
+  <input type="radio" name="size" value="85" checked><input type="radio" name="size" value="90">
+</div>
+
+<script src="../js/vendor/xlsx.full.min.js"></script>
+<script src="../js/app.js"></script>
+<script>
+var pass = 0, fail = 0, out = document.getElementById('out');
+
+function check(label, actual, expected) {
+  var a = JSON.stringify(actual), e = JSON.stringify(expected);
+  var ok = a === e;
+  ok ? pass++ : fail++;
+  var d = document.createElement('div');
+  d.className = ok ? 'pass' : 'fail';
+  d.textContent = (ok ? 'PASS  ' : 'FAIL  ') + label;
+  out.appendChild(d);
+  if (!ok) {
+    var p = document.createElement('pre');
+    p.textContent = 'expected: ' + e + '\nactual:   ' + a;
+    out.appendChild(p);
+  }
+}
+
+// rows as SheetJS would hand them to us, straight from a parsed CSV
+function rowsFromCsv(csv) {
+  var wb = XLSX.read(csv, { type: 'string' });
+  return XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {
+    header: 1, blankrows: false, raw: false
+  });
+}
+
+var P = window.BadgeMaker;
+
+check('plain lines', P.parsePeople('Ram Thapa\nSita Gurung'),
+  [{name: 'Ram Thapa', sub: ''}, {name: 'Sita Gurung', sub: ''}]);
+
+check('name + role', P.parsePeople('Jane Doe, Volunteer'),
+  [{name: 'Jane Doe', sub: 'Volunteer'}]);
+
+check('splits on first comma only', P.parsePeople('Jane Doe, Coordinator, East'),
+  [{name: 'Jane Doe', sub: 'Coordinator, East'}]);
+
+check('blank lines and padding are dropped', P.parsePeople('  Ram Thapa  \n\n   \nSita Gurung'),
+  [{name: 'Ram Thapa', sub: ''}, {name: 'Sita Gurung', sub: ''}]);
+
+check('csv with Name/Role header',
+  P.rowsToLines(rowsFromCsv('Name,Role\nJane Doe,Volunteer\nRam Thapa,Teacher')),
+  'Jane Doe, Volunteer\nRam Thapa, Teacher');
+
+check('header columns in any order / extra columns',
+  P.rowsToLines(rowsFromCsv('Email,Position,Full Name\na@b.c,Teacher,Ram Thapa')),
+  'Ram Thapa, Teacher');
+
+check('headerless csv uses columns A and B',
+  P.rowsToLines(rowsFromCsv('Jane Doe,Volunteer\nRam Thapa,Teacher')),
+  'Jane Doe, Volunteer\nRam Thapa, Teacher');
+
+check('rows with no name are skipped',
+  P.rowsToLines(rowsFromCsv('Name,Role\nJane Doe,Volunteer\n,Orphan Role\nRam Thapa,')),
+  'Jane Doe, Volunteer\nRam Thapa');
+
+check('name column only, no role header',
+  P.rowsToLines(rowsFromCsv('Name\nJane Doe\nRam Thapa')),
+  'Jane Doe\nRam Thapa');
+
+check('commas inside a spreadsheet name are stripped',
+  P.rowsToLines(rowsFromCsv('Name,Role\n"Doe, Jane",Volunteer')),
+  'Doe Jane, Volunteer');
+
+check('empty sheet', P.rowsToLines([]), '');
+
+document.getElementById('summary').textContent =
+  fail === 0 ? ('ALL ' + pass + ' TESTS PASSED') : (fail + ' FAILED, ' + pass + ' passed');
+document.getElementById('summary').className = fail === 0 ? 'pass' : 'fail';
+</script>
+</body>
+</html>
