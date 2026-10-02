@@ -37,7 +37,11 @@
   align-items: center;
   justify-content: flex-start;   /* logo sits at the top, name fills the rest */
   gap: calc(var(--bh) * 0.028);
-  padding: calc(var(--bh) * 0.074) calc(var(--bw) * 0.059) calc(var(--bh) * 0.093);
+  /* --safe keeps ink away from the badge edge without moving the badge, so a
+     pre-cut sheet stays aligned with its die */
+  padding: calc(var(--bh) * 0.074 + var(--safe, 0mm))
+           calc(var(--bw) * 0.059 + var(--safe, 0mm))
+           calc(var(--bh) * 0.093 + var(--safe, 0mm));
   text-align: center;
 }
 

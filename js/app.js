@@ -23,6 +23,7 @@
     showRuler: document.getElementById('showRuler'),
     uniform: document.getElementById('uniform'),
     topMargin: document.getElementById('topMargin'),
+    safe: document.getElementById('safe'),
     marginHint: document.getElementById('marginHint'),
     size: document.getElementById('size'),
     customSize: document.getElementById('customSize'),
@@ -208,7 +209,7 @@
 
   // Printers cannot print to the paper edge; most lose 3-5 mm. Say what the
   // margins actually are so a clipped top row is predictable, not a surprise.
-  function reportMargins(size, top) {
+  function reportMargins(size, top, safe) {
     var bottom = bottomMargin(size, top);
     var actualTop = top === null ? (297 - size.rows * size.h) / 2 : top;
     var txt = 'Sheet margins: ' + actualTop.toFixed(1) + ' mm top, ' +
@@ -216,10 +217,19 @@
               ((210 - size.cols * size.w) / 2).toFixed(1) + ' mm sides.';
     if (bottom < -0.01) {
       txt += ' The last row runs ' + (-bottom).toFixed(1) + ' mm off the page.';
-    } else if (actualTop < 5) {
-      txt += ' Most printers cannot print within about 5 mm of the edge, so the' +
-             ' top row may be clipped. Set a larger top margin, or use a' +
-             ' shorter badge height to make room.';
+    } else {
+      // most printers lose the outer 3-5 mm of the paper
+      var side = (210 - size.cols * size.w) / 2;
+      var tight = [];
+      if (actualTop + safe < 5) tight.push('top');
+      if (bottom + safe < 5) tight.push('bottom');
+      if (side + safe < 5) tight.push('left and right');
+      if (tight.length) {
+        txt += ' Printers cannot reach the outer 3-5 mm of the paper, so the ' +
+               tight.join(' and ') + ' edge' + (tight.length > 1 ? 's' : '') +
+               ' may be clipped. Raise the safe area to hold the printing' +
+               ' further inside each badge.';
+      }
     }
     el.marginHint.textContent = txt;
   }
@@ -245,8 +255,9 @@
 
     var size = currentSize();
     var top = topMargin();
+    var safe = Math.max(0, parseFloat(el.safe.value) || 0);
     var perSheet = size.cols * size.rows;
-    reportMargins(size, top);
+    reportMargins(size, top, safe);
     document.body.className = (el.showMarks.checked ? 'marks' : '') +
                               (el.uniform.checked ? ' oneline' : '');
     el.customSize.hidden = el.size.value !== 'custom';
@@ -278,6 +289,7 @@
       sheet.style.setProperty('--bw', size.w + 'mm');
       sheet.style.setProperty('--bh', size.h + 'mm');
       sheet.style.setProperty('--cols', size.cols);
+      sheet.style.setProperty('--safe', safe + 'mm');
       if (top !== null) {
         sheet.style.setProperty('--valign', 'start');
         sheet.style.setProperty('--padtop', top + 'mm');
@@ -333,7 +345,8 @@
         showMarks: el.showMarks.checked,
         showRuler: el.showRuler.checked,
         uniform: el.uniform.checked,
-        topMargin: el.topMargin.value
+        topMargin: el.topMargin.value,
+        safe: el.safe.value
       }));
     } catch (e) { /* private mode — not worth bothering the user about */ }
   }
@@ -348,6 +361,7 @@
     el.showRuler.checked = saved.showRuler !== false;
     el.uniform.checked = !!saved.uniform;
     if (saved.topMargin !== undefined) el.topMargin.value = saved.topMargin;
+    if (saved.safe !== undefined) el.safe.value = saved.safe;
     if (saved.size) el.size.value = saved.size;
     if (saved.custom) {
       el.cw.value = saved.custom.w; el.ch.value = saved.custom.h;
@@ -363,6 +377,7 @@
   el.showRuler.addEventListener('change', render);
   el.uniform.addEventListener('change', render);
   el.topMargin.addEventListener('input', render);
+  el.safe.addEventListener('input', render);
   el.size.addEventListener('change', render);
   ['cw','ch','ccols','crows'].forEach(function (id) {
     el[id].addEventListener('input', render);

@@ -40,15 +40,23 @@ your name list anywhere: everything runs locally in the page.
    the outer 3–5 mm of the paper. The margins in use are shown under the box as
    you type.
 
-   Note that this moves *everything* down, so you lose at the bottom what you
-   gain at the top. On a pre-cut sticker sheet the printing must line up with
-   the die, so if the top row cannot be printed in full, the answer is a
-   shorter badge height (which shifts content inward on every sticker), not a
-   top margin.
+   Note that a top margin moves *everything* down, so you lose at the bottom
+   what you gain at the top.
 
-4. Click **Print / Save as PDF**.
+4. Raise the **Safe area** if the outer badges are clipped on any side. This
+   holds the printing further inside every badge without moving the badge, so
+   the grid keeps its exact pitch. That matters on a pre-cut sticker sheet,
+   where the printing has to line up with the die: widening the margins would
+   pull the outer columns out of register, whereas a safe area simply keeps
+   the ink away from each sticker's edge.
 
-5. Cut along the dashed lines. Badges are laid out edge to edge, so each cut
+   With three 70 mm columns there is no side margin at all — the grid is
+   exactly 210 mm wide — so a safe area is the only way to clear the left and
+   right edges. About 5 mm is enough for most printers.
+
+5. Click **Print / Save as PDF**.
+
+6. Cut along the dashed lines. Badges are laid out edge to edge, so each cut
    line is shared between two badges — one pass of the guillotine per line.
 
 ### Print settings
