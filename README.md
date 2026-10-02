@@ -59,6 +59,11 @@ your name list anywhere: everything runs locally in the page.
 6. Cut along the dashed lines. Badges are laid out edge to edge, so each cut
    line is shared between two badges — one pass of the guillotine per line.
 
+### 
+
+Branded Word, PowerPoint and Typst templates built from the same logo and
+colours. See [templates/README.md](templates/README.md).
+
 ### Print settings
 
 The page declares the paper and margins itself
