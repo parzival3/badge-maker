@@ -69,6 +69,41 @@ The badge text colour is `--brand` style `#123f6b` in `css/print.css`
   spreadsheet upload for those; commas in the name column are stripped there.
 - Long names are automatically shrunk to fit (down to 8 pt) rather than wrapped.
 
+## Other assets in this repo
+
+### `assets/nkfmh-logo.svg`
+
+The Nepal Korea Friendship Municipality Hospital emblem, as vector. Traced from
+a 2048 px raster: the flat artwork comes from an auto-trace, while the three
+gradient regions (the sky-to-earth disc, the lotus petals and the crown) are
+hand-authored SVG gradients, since tracers flatten gradients to a single muddy
+colour. Verified by sampling matching pixels against the original — the petal
+ramp matches to within a couple of RGB units. Transparent background.
+
+Note the ring text is outlines, not live type, so it cannot be re-set. If the
+hospital can supply their original vector file, prefer it over this trace.
+
+### `banner/`
+
+An 8 × 4 ft (2438.4 × 1219.2 mm) flex banner for the PNC home visit nurses
+training, built from both logos.
+
+- `pnc-training-banner-8x4ft.svg` — the artwork, 1 user unit = 1 mm
+- `build-banner.py` — regenerates it from the two logos in `assets/`
+
+```sh
+python3 banner/build-banner.py                 # rewrites the SVG in place
+rsvg-convert -f pdf -o banner.pdf banner/pnc-training-banner-8x4ft.svg
+```
+
+Fonts: **Inter** and **Noto Sans Devanagari**. Both must be installed for the
+text to render; export to PDF (fonts embedded) before sending to a printer.
+
+The Nepali date on the banner, आश्विन १८–२१, २०८३, is 4–7 October 2026
+converted to Bikram Sambat and cross-checked with two independent libraries.
+The Nepali title (सुत्केरी गृहभ्रमण नर्स तालिम) is a draft and should be
+confirmed by a Nepali speaker before printing.
+
 ## Development
 
 Static files, no build step:
