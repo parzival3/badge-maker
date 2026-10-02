@@ -22,6 +22,8 @@
     showMarks: document.getElementById('showMarks'),
     showRuler: document.getElementById('showRuler'),
     uniform: document.getElementById('uniform'),
+    topMargin: document.getElementById('topMargin'),
+    marginHint: document.getElementById('marginHint'),
     size: document.getElementById('size'),
     customSize: document.getElementById('customSize'),
     cw: document.getElementById('cw'),
@@ -35,6 +37,11 @@
   };
 
   // The chosen size, either a preset or whatever is typed into the custom boxes.
+  function topMargin() {
+    var v = el.topMargin.value.trim();
+    return v === '' ? null : Math.max(0, parseFloat(v) || 0);
+  }
+
   function currentSize() {
     var id = el.size.value;
     if (id !== 'custom') return SIZES[id];
@@ -194,6 +201,29 @@
     }
   }
 
+  function bottomMargin(size, top) {
+    var used = size.rows * size.h;
+    return top === null ? (297 - used) / 2 : 297 - used - top;
+  }
+
+  // Printers cannot print to the paper edge; most lose 3-5 mm. Say what the
+  // margins actually are so a clipped top row is predictable, not a surprise.
+  function reportMargins(size, top) {
+    var bottom = bottomMargin(size, top);
+    var actualTop = top === null ? (297 - size.rows * size.h) / 2 : top;
+    var txt = 'Sheet margins: ' + actualTop.toFixed(1) + ' mm top, ' +
+              bottom.toFixed(1) + ' mm bottom, ' +
+              ((210 - size.cols * size.w) / 2).toFixed(1) + ' mm sides.';
+    if (bottom < -0.01) {
+      txt += ' The last row runs ' + (-bottom).toFixed(1) + ' mm off the page.';
+    } else if (actualTop < 5) {
+      txt += ' Most printers cannot print within about 5 mm of the edge, so the' +
+             ' top row may be clipped. Set a larger top margin, or use a' +
+             ' shorter badge height to make room.';
+    }
+    el.marginHint.textContent = txt;
+  }
+
   // A4 is 210 x 297 mm; say so plainly when a custom grid will not fit.
   function reportFit(size) {
     if (el.size.value !== 'custom') { el.fitHint.textContent = ''; return; }
@@ -214,14 +244,16 @@
     var showSub = el.showSub.checked && people.some(function (p) { return !!p.sub; });
 
     var size = currentSize();
+    var top = topMargin();
     var perSheet = size.cols * size.rows;
+    reportMargins(size, top);
     document.body.className = (el.showMarks.checked ? 'marks' : '') +
                               (el.uniform.checked ? ' oneline' : '');
     el.customSize.hidden = el.size.value !== 'custom';
     reportFit(size);
 
     // the bar lives in the bottom margin; edge-to-edge grids have none
-    var rulerFits = (297 - size.rows * size.h) / 2 >= 9;
+    var rulerFits = bottomMargin(size, top) >= 9;
     el.showRuler.parentNode.title = rulerFits ? '' :
       'No room at this badge size - the grid reaches the edge of the sheet.';
     el.showRuler.disabled = !rulerFits;
@@ -246,6 +278,10 @@
       sheet.style.setProperty('--bw', size.w + 'mm');
       sheet.style.setProperty('--bh', size.h + 'mm');
       sheet.style.setProperty('--cols', size.cols);
+      if (top !== null) {
+        sheet.style.setProperty('--valign', 'start');
+        sheet.style.setProperty('--padtop', top + 'mm');
+      }
       for (var i = 0; i < perSheet; i++) {
         // empty trailing slots keep the cut lines on the last sheet aligned
         sheet.appendChild(makeBadge(people[s * perSheet + i] || null, showSub));
@@ -296,7 +332,8 @@
         showSub: el.showSub.checked,
         showMarks: el.showMarks.checked,
         showRuler: el.showRuler.checked,
-        uniform: el.uniform.checked
+        uniform: el.uniform.checked,
+        topMargin: el.topMargin.value
       }));
     } catch (e) { /* private mode — not worth bothering the user about */ }
   }
@@ -310,6 +347,7 @@
     el.showMarks.checked = saved.showMarks !== false;
     el.showRuler.checked = saved.showRuler !== false;
     el.uniform.checked = !!saved.uniform;
+    if (saved.topMargin !== undefined) el.topMargin.value = saved.topMargin;
     if (saved.size) el.size.value = saved.size;
     if (saved.custom) {
       el.cw.value = saved.custom.w; el.ch.value = saved.custom.h;
@@ -324,6 +362,7 @@
   el.showMarks.addEventListener('change', render);
   el.showRuler.addEventListener('change', render);
   el.uniform.addEventListener('change', render);
+  el.topMargin.addEventListener('input', render);
   el.size.addEventListener('change', render);
   ['cw','ch','ccols','crows'].forEach(function (id) {
     el[id].addEventListener('input', render);

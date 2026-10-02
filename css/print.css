@@ -18,7 +18,10 @@
   grid-template-columns: repeat(var(--cols), var(--bw));
   grid-auto-rows: var(--bh);
   justify-content: center;
-  align-content: center;
+  /* vertically centred unless a top margin is set, in which case the grid
+     hangs from that margin so the first row clears the printer's dead zone */
+  align-content: var(--valign, center);
+  padding-top: var(--padtop, 0);
   gap: 0;                        /* adjacent badges share one cut line */
   background: #fff;
   overflow: hidden;

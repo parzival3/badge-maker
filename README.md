@@ -33,9 +33,22 @@ your name list anywhere: everything runs locally in the page.
    count, reports the resulting margins, and warns you if the grid will not
    fit on A4.
 
-3. Click **Print / Save as PDF**.
+3. Set a **Top margin** if the first row comes out clipped. Left blank, the
+   grid is centred on the sheet. Given a number, the grid hangs from that
+   margin instead — the fix when a dense grid pushes the top row into the strip
+   your printer physically cannot reach, which on most inkjets and lasers is
+   the outer 3–5 mm of the paper. The margins in use are shown under the box as
+   you type.
 
-4. Cut along the dashed lines. Badges are laid out edge to edge, so each cut
+   Note that this moves *everything* down, so you lose at the bottom what you
+   gain at the top. On a pre-cut sticker sheet the printing must line up with
+   the die, so if the top row cannot be printed in full, the answer is a
+   shorter badge height (which shifts content inward on every sticker), not a
+   top margin.
+
+4. Click **Print / Save as PDF**.
+
+5. Cut along the dashed lines. Badges are laid out edge to edge, so each cut
    line is shared between two badges — one pass of the guillotine per line.
 
 ### Print settings
