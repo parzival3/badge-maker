@@ -82,3 +82,12 @@ chimalayanepal.org. If Chimalaya Charity has its own lockup, replace
 version for dark backgrounds) and re-run the build script.
 
 `chimalaya.org` is **not** the charity — the domain now serves unrelated spam.
+
+## Documents built on the template
+
+- [`documents/volunteering-at-chimalaya-nepal.typ`](../documents/volunteering-at-chimalaya-nepal.typ)
+  — information sheet for prospective volunteers.
+
+```sh
+typst compile --root . documents/volunteering-at-chimalaya-nepal.typ out.pdf
+```

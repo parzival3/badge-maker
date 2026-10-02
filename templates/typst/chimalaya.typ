@@ -22,7 +22,7 @@
   title: none,
   subtitle: none,
   author: none,
-  date: datetime.today(),
+  date: none,
   logo: "../assets/chimalaya-logo.png",
   org: "Chimalaya Charity",
   cover: true,
@@ -78,22 +78,27 @@
   set enum(numbering: n => text(fill: brand.crimson, weight: 650)[#n.])
 
   if cover {
-    // masthead
-    image(logo, width: 58mm)
-    v(22mm)
-    if title != none {
-      text(size: 30pt, weight: 700, fill: brand.navy, title)
-      v(3mm)
-    }
-    if subtitle != none {
-      text(size: 14pt, fill: brand.muted, subtitle)
-      v(5mm)
-    }
-    line(length: 32mm, stroke: 3pt + brand.crimson)
-    v(6mm)
-    set text(10pt, fill: brand.muted)
-    if author != none [#author \ ]
-    if date != none [#date.display("[day] [month repr:long] [year]")]
+    block(width: 100%, {
+      // the body is justified; a justified cover title stretches its words
+      // across the measure, so the cover sets its own ragged-right paragraphs
+      set par(justify: false, leading: 0.4em)
+      image(logo, width: 58mm)
+      v(22mm)
+      if title != none {
+        text(size: 30pt, weight: 700, fill: brand.navy, title)
+        v(4mm)
+      }
+      if subtitle != none {
+        text(size: 14pt, fill: brand.muted, subtitle)
+        v(6mm)
+      }
+      line(length: 32mm, stroke: 3pt + brand.crimson)
+      v(6mm)
+      set text(10pt, fill: brand.muted)
+      set par(leading: 0.65em)
+      if author != none [#author \ ]
+      if date != none [#date.display("[day] [month repr:long] [year]")]
+    })
     v(14mm)
   }
 
