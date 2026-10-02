@@ -20,9 +20,10 @@
 <div hidden>
   <textarea id="names"></textarea>
   <input type="file" id="file"><p id="fileHint"></p>
-  <input type="checkbox" id="showSub" checked><input type="checkbox" id="showMarks" checked><input type="checkbox" id="showRuler" checked>
+  <input type="checkbox" id="showSub" checked><input type="checkbox" id="showMarks" checked><input type="checkbox" id="showRuler" checked><input type="checkbox" id="uniform">
   <p id="count"></p><button id="print"></button><div id="preview"></div>
-  <input type="radio" name="size" value="85" checked><input type="radio" name="size" value="90">
+  <select id="size"><option value="85x54" selected>a</option><option value="custom">b</option></select>
+  <div id="customSize"><input id="cw" value="70"><input id="ch" value="37"><input id="ccols" value="3"><input id="crows" value="8"><p id="fitHint"></p></div>
 </div>
 
 <script src="../js/vendor/xlsx.full.min.js"></script>

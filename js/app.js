@@ -3,8 +3,15 @@
 (function () {
   'use strict';
 
-  var PER_ROW = 2;
-  var PER_SHEET = 10;
+  // A4 is 210 x 297 mm. Each preset tiles the sheet edge to edge and the grid
+  // is centred, so the sheet margins fall out of the arithmetic: three 70 mm
+  // columns span the full 210 mm with no side margin at all, and eight 37 mm
+  // rows leave 0.5 mm top and bottom.
+  var SIZES = {
+    '85x54': { w: 85, h: 54, cols: 2, rows: 5 },
+    '90x54': { w: 90, h: 54, cols: 2, rows: 5 },
+    '70x37': { w: 70, h: 37, cols: 3, rows: 8 }
+  };
   var STORE_KEY = 'badge-maker/v1';
 
   var el = {
@@ -14,13 +21,29 @@
     showSub: document.getElementById('showSub'),
     showMarks: document.getElementById('showMarks'),
     showRuler: document.getElementById('showRuler'),
+    uniform: document.getElementById('uniform'),
+    size: document.getElementById('size'),
+    customSize: document.getElementById('customSize'),
+    cw: document.getElementById('cw'),
+    ch: document.getElementById('ch'),
+    ccols: document.getElementById('ccols'),
+    crows: document.getElementById('crows'),
+    fitHint: document.getElementById('fitHint'),
     count: document.getElementById('count'),
     print: document.getElementById('print'),
     preview: document.getElementById('preview')
   };
 
-  function sizeInput() {
-    return document.querySelector('input[name=size]:checked');
+  // The chosen size, either a preset or whatever is typed into the custom boxes.
+  function currentSize() {
+    var id = el.size.value;
+    if (id !== 'custom') return SIZES[id];
+    return {
+      w: parseFloat(el.cw.value) || 70,
+      h: parseFloat(el.ch.value) || 37,
+      cols: parseInt(el.ccols.value, 10) || 1,
+      rows: parseInt(el.crows.value, 10) || 1
+    };
   }
 
   /* ---------- input parsing ---------- */
@@ -136,20 +159,29 @@
   // tiny line. Measuring the rendered text beats guessing from the character
   // count: "WILHELMINA" and "iiiiiiiiii" are the same length but not the same
   // width.
-  function fitName(node, main, startPt, minPt) {
-    // collapse the text first so it cannot inflate the box we are measuring
-    node.style.fontSize = minPt + 'pt';
-
+  // Measured once per sheet, from the first badge. Grid cells can differ by a
+  // sub-pixel, and measuring each badge separately let that rounding flip
+  // identical names between one line and two.
+  function nameBox(main) {
     var sub = main.querySelector('.badge-sub');
     var gap = parseFloat(getComputedStyle(main).rowGap) || 0;
-    var maxW = main.clientWidth;
-    var maxH = main.clientHeight - (sub ? sub.offsetHeight + gap : 0);
+    return {
+      w: Math.floor(main.clientWidth),
+      h: Math.floor(main.clientHeight - (sub ? sub.offsetHeight + gap : 0))
+    };
+  }
+
+  function fitName(node, box, startPt, minPt) {
+    // collapse the text first so it cannot inflate the box we are measuring
+    node.style.fontSize = minPt + 'pt';
+    var maxW = box.w, maxH = box.h;
 
     for (var pt = startPt; pt > minPt; pt -= 0.5) {
       node.style.fontSize = pt + 'pt';
-      if (node.scrollWidth <= maxW + 0.5 && node.scrollHeight <= maxH + 0.5) return;
+      if (node.scrollWidth <= maxW + 0.5 && node.scrollHeight <= maxH + 0.5) return pt;
     }
     node.style.fontSize = minPt + 'pt';
+    return minPt;
   }
 
   // The role line stays on one line; shrink it against its own width.
@@ -162,14 +194,39 @@
     }
   }
 
+  // A4 is 210 x 297 mm; say so plainly when a custom grid will not fit.
+  function reportFit(size) {
+    if (el.size.value !== 'custom') { el.fitHint.textContent = ''; return; }
+    var w = size.cols * size.w, h = size.rows * size.h;
+    var over = [];
+    if (w > 210.01) over.push(w.toFixed(1) + ' mm wide');
+    if (h > 297.01) over.push(h.toFixed(1) + ' mm tall');
+    el.fitHint.textContent = over.length
+      ? 'Does not fit A4: the grid is ' + over.join(' and ') + '. Badges will be cut off.'
+      : size.cols * size.rows + ' per sheet. Margins: ' +
+        ((210 - w) / 2).toFixed(1) + ' mm left/right, ' +
+        ((297 - h) / 2).toFixed(1) + ' mm top/bottom.';
+  }
+
   function render() {
     var people = parsePeople(el.names.value);
     // no point reserving the role line if nobody has a role
     var showSub = el.showSub.checked && people.some(function (p) { return !!p.sub; });
 
-    document.body.className = 'size-' + sizeInput().value + (el.showMarks.checked ? ' marks' : '');
+    var size = currentSize();
+    var perSheet = size.cols * size.rows;
+    document.body.className = (el.showMarks.checked ? 'marks' : '') +
+                              (el.uniform.checked ? ' oneline' : '');
+    el.customSize.hidden = el.size.value !== 'custom';
+    reportFit(size);
 
-    var sheets = Math.ceil(people.length / PER_SHEET);
+    // the bar lives in the bottom margin; edge-to-edge grids have none
+    var rulerFits = (297 - size.rows * size.h) / 2 >= 9;
+    el.showRuler.parentNode.title = rulerFits ? '' :
+      'No room at this badge size - the grid reaches the edge of the sheet.';
+    el.showRuler.disabled = !rulerFits;
+
+    var sheets = Math.ceil(people.length / perSheet);
     el.count.textContent = people.length + (people.length === 1 ? ' name' : ' names') +
       (sheets ? ' → ' + sheets + (sheets === 1 ? ' sheet' : ' sheets') : '');
 
@@ -186,11 +243,14 @@
     for (var s = 0; s < sheets; s++) {
       var sheet = document.createElement('div');
       sheet.className = 'sheet';
-      for (var i = 0; i < PER_SHEET; i++) {
+      sheet.style.setProperty('--bw', size.w + 'mm');
+      sheet.style.setProperty('--bh', size.h + 'mm');
+      sheet.style.setProperty('--cols', size.cols);
+      for (var i = 0; i < perSheet; i++) {
         // empty trailing slots keep the cut lines on the last sheet aligned
-        sheet.appendChild(makeBadge(people[s * PER_SHEET + i] || null, showSub));
+        sheet.appendChild(makeBadge(people[s * perSheet + i] || null, showSub));
       }
-      if (el.showRuler.checked) {
+      if (el.showRuler.checked && rulerFits) {
         var ruler = document.createElement('div');
         ruler.className = 'sheet-ruler';
         var tag = document.createElement('span');
@@ -203,12 +263,24 @@
 
     // Size the role line first: it is flex: none, so its final height decides
     // how much room is left for the name box.
+    var k = size.h / 54;                       // 54 mm is the size the type was tuned at
     el.preview.querySelectorAll('.badge-sub').forEach(function (n) {
-      shrinkToFit(n, 10.5, 6);
+      shrinkToFit(n, 10.5 * k, 5 * k);
     });
-    el.preview.querySelectorAll('.badge-main').forEach(function (main) {
-      fitName(main.querySelector('.badge-name'), main, 28, 8);
-    });
+    var first = el.preview.querySelector('.badge-main');
+    if (first) {
+      var box = nameBox(first);
+      var names = el.preview.querySelectorAll('.badge-name');
+      var smallest = Infinity;
+      names.forEach(function (n) {
+        smallest = Math.min(smallest, fitName(n, box, 28 * k, 5));
+      });
+      // level every badge to the size the longest name needed, so near-identical
+      // names cannot sit at different sizes on the same sheet
+      if (el.uniform.checked && isFinite(smallest)) {
+        names.forEach(function (n) { n.style.fontSize = smallest + 'pt'; });
+      }
+    }
 
     save();
   }
@@ -219,10 +291,12 @@
     try {
       localStorage.setItem(STORE_KEY, JSON.stringify({
         names: el.names.value,
-        size: sizeInput().value,
+        size: el.size.value,
+        custom: { w: el.cw.value, h: el.ch.value, cols: el.ccols.value, rows: el.crows.value },
         showSub: el.showSub.checked,
         showMarks: el.showMarks.checked,
-        showRuler: el.showRuler.checked
+        showRuler: el.showRuler.checked,
+        uniform: el.uniform.checked
       }));
     } catch (e) { /* private mode — not worth bothering the user about */ }
   }
@@ -235,8 +309,12 @@
     el.showSub.checked = saved.showSub !== false;
     el.showMarks.checked = saved.showMarks !== false;
     el.showRuler.checked = saved.showRuler !== false;
-    var radio = document.querySelector('input[name=size][value="' + saved.size + '"]');
-    if (radio) radio.checked = true;
+    el.uniform.checked = !!saved.uniform;
+    if (saved.size) el.size.value = saved.size;
+    if (saved.custom) {
+      el.cw.value = saved.custom.w; el.ch.value = saved.custom.h;
+      el.ccols.value = saved.custom.cols; el.crows.value = saved.custom.rows;
+    }
   }
 
   /* ---------- wiring ---------- */
@@ -245,8 +323,10 @@
   el.showSub.addEventListener('change', render);
   el.showMarks.addEventListener('change', render);
   el.showRuler.addEventListener('change', render);
-  document.querySelectorAll('input[name=size]').forEach(function (r) {
-    r.addEventListener('change', render);
+  el.uniform.addEventListener('change', render);
+  el.size.addEventListener('change', render);
+  ['cw','ch','ccols','crows'].forEach(function (id) {
+    el[id].addEventListener('input', render);
   });
   el.file.addEventListener('change', function () {
     if (this.files[0]) loadFile(this.files[0]);

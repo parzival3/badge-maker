@@ -18,8 +18,20 @@ your name list anywhere: everything runs locally in the page.
 
    …or upload a spreadsheet (`.xlsx`, `.xls`, `.csv`, `.ods`) instead — see below.
 
-2. Pick the badge size: **85 × 54 mm** (credit-card size) or **90 × 54 mm**.
-   Either way you get **10 badges per A4 sheet**, in 2 columns × 5 rows.
+2. Pick the badge size:
+
+   | Size | Per sheet | Grid | Sheet margins |
+   |---|---|---|---|
+   | 85 × 54 mm | 10 | 2 × 5 | 20 mm sides, 13.5 mm top/bottom |
+   | 90 × 54 mm | 10 | 2 × 5 | 15 mm sides, 13.5 mm top/bottom |
+   | 70 × 37 mm | 24 | 3 × 8 | **none at the sides**, 0.5 mm top/bottom |
+   | Custom | your choice | your choice | calculated and shown as you type |
+
+   The 70 × 37 preset suits A4 sticker sheets cut 3 × 8 edge to edge: three
+   70 mm columns span the full 210 mm exactly, and eight 37 mm rows leave
+   0.5 mm top and bottom. **Custom** takes a width, height, column and row
+   count, reports the resulting margins, and warns you if the grid will not
+   fit on A4.
 
 3. Click **Print / Save as PDF**.
 
@@ -67,7 +79,13 @@ The badge text colour is `--brand` style `#123f6b` in `css/print.css`
 
 - A name containing a comma (`Doe, Jane`) is split into name + role. Use the
   spreadsheet upload for those; commas in the name column are stripped there.
-- Long names are automatically shrunk to fit (down to 8 pt) rather than wrapped.
+- Long names shrink to fit and wrap across lines when that buys a larger size.
+  On a dense sheet this can leave near-identical names on different line counts,
+  because a name containing a `1` is narrower than one without. Tick **Keep
+  every name on one line** to shrink instead of wrap and level every badge to a
+  single size — worth it at 24 per sheet.
+- The 100 mm scale check needs a bottom margin to sit in, so it is unavailable
+  at sizes whose grid reaches the edge of the sheet, such as 70 × 37 mm.
 
 ## Other assets in this repo
 
@@ -130,30 +148,22 @@ line and spreadsheet parsers and prints a pass/fail list.
 
 ## Changing the badge size / adding a label-sheet preset
 
-The current sizes assume **full-sheet** paper or sticker paper that you cut
-yourself: badges are laid out edge to edge with no gaps, centred on the page.
-Die-cut label sheets (Avery and similar) instead have a fixed sheet margin
-*and* a gap between labels, so they need those numbers too.
+For a one-off, use **Custom** in the page. To add a permanent preset, two edits:
 
-To add a size, three edits:
+1. **`js/app.js`** — an entry in the `SIZES` table:
+   ```js
+   '99x57': { w: 99.1, h: 57, cols: 2, rows: 5 },
+   ```
+2. **`index.html`** — a matching `<option value="99x57">` in the size `<select>`.
 
-1. **`index.html`** — another radio next to the existing ones:
-   ```html
-   <label><input type="radio" name="size" value="99"> 99.1 × 57 mm</label>
-   ```
-2. **`css/print.css`** — the matching dimensions. The class name is
-   `size-` plus the radio's `value`; `app.js` puts it on `<body>`:
-   ```css
-   .size-99 .sheet { --bw: 99.1mm; --bh: 57mm; }
-   ```
-   For a die-cut sheet, also set the sheet padding and grid gap for that size,
-   e.g. `.size-99 .sheet { padding: 13mm 5.5mm; gap: 0 2.5mm; }` — take the
-   margin and pitch straight off the label pack, and switch
-   `justify-content` / `align-content` from `center` to `start` so the grid
-   anchors to that margin instead of being re-centred.
-3. **`js/app.js`** — nothing, as long as the grid still holds 10 badges.
-   For a different count, change `PER_SHEET` (and make it per-size if your
-   presets differ).
+The grid is centred on the sheet, so the margins follow from the arithmetic and
+there is nothing else to set.
+
+**Die-cut label sheets are the exception.** They have a gap between labels as
+well as a margin, which this layout does not model — it tiles badges edge to
+edge. Supporting them needs a `gap` and an explicit `padding` on `.sheet` in
+`css/print.css`, plus switching `justify-content` / `align-content` from
+`center` to `start` so the grid anchors to the margin printed on the pack.
 
 Verify any new size by printing to PDF and measuring, not by eye:
 

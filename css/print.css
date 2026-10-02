@@ -7,13 +7,15 @@
 
 .sheet {
   position: relative;          /* anchors the 100 mm scale check */
-  --bw: 85mm;           /* overridden by .size-90 */
+  /* --bw / --bh / --cols are set by app.js from the chosen size */
+  --bw: 85mm;
   --bh: 54mm;
+  --cols: 2;
   box-sizing: border-box;
   width: 210mm;
   height: 297mm;
   display: grid;
-  grid-template-columns: repeat(2, var(--bw));
+  grid-template-columns: repeat(var(--cols), var(--bw));
   grid-auto-rows: var(--bh);
   justify-content: center;
   align-content: center;
@@ -21,8 +23,6 @@
   background: #fff;
   overflow: hidden;
 }
-
-.size-90 .sheet { --bw: 90mm; }
 
 .badge {
   box-sizing: border-box;
@@ -33,8 +33,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;   /* logo sits at the top, name fills the rest */
-  gap: 1.5mm;
-  padding: 4mm 5mm 5mm;
+  gap: calc(var(--bh) * 0.028);
+  padding: calc(var(--bh) * 0.074) calc(var(--bw) * 0.059) calc(var(--bh) * 0.093);
   text-align: center;
 }
 
@@ -43,8 +43,8 @@
 .marks .badge { outline: 0.2mm dashed #9aa3ad; outline-offset: -0.1mm; }
 
 .badge-logo {
-  width: 34mm;
-  max-height: 8mm;
+  width: calc(var(--bw) * 0.40);
+  max-height: calc(var(--bh) * 0.17);
   object-fit: contain;
   flex: none;
   align-self: flex-start;      /* top-left corner of the badge */
@@ -60,7 +60,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5mm;
+  gap: calc(var(--bh) * 0.028);
   overflow: hidden;
 }
 
@@ -128,3 +128,7 @@
   .sheet:last-child { break-after: auto; page-break-after: auto; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+/* "Keep every name on one line": shrink instead of wrapping, so a dense sheet
+   reads as a regular grid rather than a mix of one- and two-line badges. */
+.oneline .badge-name { white-space: nowrap; }
