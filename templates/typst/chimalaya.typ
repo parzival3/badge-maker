@@ -83,7 +83,7 @@
       // across the measure, so the cover sets its own ragged-right paragraphs
       set par(justify: false, leading: 0.4em)
       image(logo, width: 58mm)
-      v(22mm)
+      v(13mm)
       if title != none {
         text(size: 30pt, weight: 700, fill: brand.navy, title)
         v(4mm)
@@ -99,7 +99,7 @@
       if author != none [#author \ ]
       if date != none [#date.display("[day] [month repr:long] [year]")]
     })
-    v(14mm)
+    v(11mm)
   }
 
   body
