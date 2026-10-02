@@ -88,6 +88,20 @@ version for dark backgrounds) and re-run the build script.
 - [`documents/volunteering-at-chimalaya-nepal.typ`](../documents/volunteering-at-chimalaya-nepal.typ)
   — information sheet for prospective volunteers.
 
+Build it with the Nix shell in that folder, which pins Typst and supplies the
+Inter and Noto Sans Devanagari fonts without installing anything system-wide:
+
+```sh
+cd documents
+nix-shell --run build      # every .typ here -> .pdf
+nix-shell --run watch      # recompile on save
+```
+
+Or directly, if you have Typst and the fonts already:
+
 ```sh
 typst compile --root . documents/volunteering-at-chimalaya-nepal.typ out.pdf
 ```
+
+The `--root` matters: documents load the template and logo from `templates/`,
+outside their own directory. The generated PDFs are git-ignored.
