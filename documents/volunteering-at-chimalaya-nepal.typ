@@ -3,11 +3,11 @@
 //   typst compile --root . documents/volunteering-at-chimalaya-nepal.typ
 //
 // Background on the organisation is drawn from chimalayanepal.org (About CC).
-#import "../templates/typst/chimalaya.typ": chimalaya-doc, callout, brand
+#import "../templates/typst/chimalaya.typ": chimalaya-doc, callout, brand, imprint
 
 #show: chimalaya-doc.with(
   title: "Volunteering at Chimalaya Nepal, 2027 Program",
-  subtitle: "Improving maternal and child health, in homes around Kathmandu",
+  subtitle: "Information for prospective volunteers",
   author: "Chimalaya Charity",
   org: "Chimalaya Charity",
 )
@@ -230,7 +230,6 @@ Held twice a week for mothers with children aged 6–24 months.
 
 = Contact
 
-/ Chimalaya Nepal: Bode, Madhyapur Thimi-8, Bhaktapur, Nepal
-/ Phone: +977-01-6631122 — mobile 9862579490
-/ Email: #link("mailto:chimalayanepal2014@gmail.com")[chimalayanepal2014\@gmail.com]
-/ Web: #link("https://chimalayanepal.org")[chimalayanepal.org]
+To apply, or to ask anything about a placement, write to the clinic:
+
+#imprint()

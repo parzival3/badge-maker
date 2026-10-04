@@ -82,6 +82,22 @@ strength the brand crimson reads as a pink blotch behind body text.
 `cover` (set `cover: false` for a short note with no cover page). Colours are
 exposed as `brand.navy`, `brand.crimson` and so on.
 
+## Organisation details
+
+`org-details` in `typst/chimalaya.typ` holds the name, Nepali name, tagline,
+address, phone, email, both websites, Facebook, and the registration numbers
+(Regd. No. 87/072/073, SWC Regd. No. 44059) — taken from Chimalaya's printed
+flyers and chimalayanepal.org. Quote them from there rather than retyping, and
+correct them in one place if they change.
+
+- `#imprint()` renders the full block, rules and all. Nepali documents are
+  normally expected to show the registration numbers, so they are included.
+- `#partners("a.png", "b.png", caption: "In partnership with")` renders a row
+  of partner logos, as the flyers do for Rotary and Inner Wheel. You need to
+  supply those logo files.
+- The cover prints the tagline under the logo. Pass `tagline: none` to omit it,
+  and avoid repeating it in the subtitle.
+
 ## A note on the logo
 
 These use the **CHIMALAYA NEPAL** lockup, the only vector logo available from

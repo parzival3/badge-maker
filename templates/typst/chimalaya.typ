@@ -16,6 +16,22 @@
 
 // Inter matches the logo and the printed materials. Typst falls back to its
 // default sans if Inter is not installed, which still reads correctly.
+// Organisation details, as printed on Chimalaya's own flyers and listed on
+// chimalayanepal.org. Kept here so every document quotes the same values.
+#let org-details = (
+  name: "Chimalaya Charity Nepal",
+  nepali: "चिमालय च्यारिटी नेपाल",
+  tagline: "Improving maternal and child health",
+  address: "Bode, Madhyapur Thimi-8, Bhaktapur, Nepal",
+  phone: "+977-01-6631122",
+  mobile: "9862579490",
+  email: "chimalayanepal2014@gmail.com",
+  web: ("chimalayacharity.com", "chimalayanepal.org"),
+  facebook: "facebook.com/chimalayacharity",
+  regd: "Regd. No. 87/072/073",
+  swc: "SWC Regd. No. 44059",
+)
+
 #let body-font = ("Inter", "Liberation Sans")
 
 #let chimalaya-doc(
@@ -27,6 +43,7 @@
   watermark: true,
   mark: "../assets/chimalaya-mark-faded.svg",
   org: "Chimalaya Charity",
+  tagline: org-details.tagline,
   cover: true,
   body,
 ) = {
@@ -91,7 +108,12 @@
       // across the measure, so the cover sets its own ragged-right paragraphs
       set par(justify: false, leading: 0.4em)
       image(logo, width: 58mm)
-      v(13mm)
+      if tagline != none {
+        v(4mm)
+        text(size: 8.5pt, weight: 600, fill: brand.crimson,
+             tracking: 0.14em, upper(tagline))
+      }
+      v(5mm)
       if title != none {
         text(size: 30pt, weight: 700, fill: brand.navy, title)
         v(4mm)
@@ -107,7 +129,7 @@
       if author != none [#author \ ]
       if date != none [#date.display("[day] [month repr:long] [year]")]
     })
-    v(11mm)
+    v(8mm)
   }
 
   body
@@ -126,5 +148,59 @@
       linebreak()
     }
     body
+  },
+)
+
+
+// The full organisation imprint. Nepali documents are normally expected to
+// carry the registration numbers, so they are part of the block rather than
+// an afterthought.
+#let imprint(details: org-details) = block(
+  width: 100%,
+  above: 1.4em,
+  {
+    line(length: 100%, stroke: 0.5pt + brand.rule)
+    v(3mm)
+    set text(size: 8.5pt, fill: brand.muted, hyphenate: false)
+    set par(justify: false, leading: 0.6em)
+    grid(
+      columns: (1.25fr, 1fr, auto),
+      gutter: 8mm,
+      [
+        #text(weight: 650, fill: brand.navy, details.name) \
+        #details.nepali \
+        #details.address
+      ],
+      [
+        #details.phone · #details.mobile \
+        #link("mailto:" + details.email)[#details.email] \
+        #details.web.map(w => link("https://" + w)[#w]).join([ · ])
+      ],
+      align(right)[
+        #details.regd \
+        #details.swc \
+        #link("https://" + details.facebook)[#details.facebook]
+      ],
+    )
+  },
+)
+
+// A row of partner logos, as the flyers carry (Rotary, Inner Wheel, ...).
+// Pass image paths: #partners("../assets/rotary.png", "../assets/iw.png")
+#let partners(..paths, height: 13mm, caption: none) = block(
+  width: 100%,
+  above: 1.4em,
+  {
+    line(length: 100%, stroke: 0.5pt + brand.rule)
+    v(4mm)
+    if caption != none {
+      text(size: 8pt, fill: brand.muted, tracking: 0.1em, upper(caption))
+      v(3mm)
+    }
+    grid(
+      columns: paths.pos().len() * (1fr,),
+      gutter: 8mm,
+      ..paths.pos().map(p => align(center + horizon, image(p, height: height))),
+    )
   },
 )
