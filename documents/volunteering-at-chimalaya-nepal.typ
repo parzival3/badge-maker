@@ -6,7 +6,7 @@
 #import "../templates/typst/chimalaya.typ": chimalaya-doc, callout, brand
 
 #show: chimalaya-doc.with(
-  title: "Volunteering at Chimalaya Nepal",
+  title: "Volunteering at Chimalaya Nepal, 2027 Program",
   subtitle: "Improving maternal and child health, in homes around Kathmandu",
   author: "Chimalaya Charity",
   org: "Chimalaya Charity",

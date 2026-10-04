@@ -24,6 +24,8 @@
   author: none,
   date: none,
   logo: "../assets/chimalaya-logo.png",
+  watermark: true,
+  mark: "../assets/chimalaya-mark-faded.svg",
   org: "Chimalaya Charity",
   cover: true,
   body,
@@ -33,6 +35,12 @@
   set page(
     paper: "a4",
     margin: (top: 28mm, bottom: 24mm, left: 24mm, right: 24mm),
+    // The mark carries its own opacity (Typst has no image-opacity property),
+    // and bleeds off the bottom-right corner so it never sits behind a line of
+    // text at full strength.
+    background: if watermark {
+      place(bottom + right, dx: 52mm, dy: 44mm, image(mark, width: 128mm))
+    },
     header: context {
       // the cover carries its own masthead, so skip the running header there
       if cover and here().page() == 1 { return }

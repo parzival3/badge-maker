@@ -70,7 +70,15 @@ Body text.
 #callout(title: "Note")[A tinted box for key findings.]
 ```
 
-`chimalaya-doc` takes `title`, `subtitle`, `author`, `date`, `org`, `logo` and
+A faded Chimalaya mark sits in the page background by default. Pass
+`watermark: false` to drop it, or `mark:` to point at different artwork. The
+opacity lives in the SVG itself (`assets/chimalaya-mark-faded.svg`, currently
+5 %) because Typst has no image-opacity property — edit the `opacity`
+attribute there to change it. The mark is monochrome navy on purpose: at this
+strength the brand crimson reads as a pink blotch behind body text.
+
+`chimalaya-doc` takes `title`, `subtitle`, `author`, `date`, `org`, `logo`,
+`watermark`, `mark` and
 `cover` (set `cover: false` for a short note with no cover page). Colours are
 exposed as `brand.navy`, `brand.crimson` and so on.
 
