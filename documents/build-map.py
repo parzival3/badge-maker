@@ -6,7 +6,7 @@ with --refresh to pull it again. Output: assets/clinic-map.svg
 Data (c) OpenStreetMap contributors, ODbL. The attribution is drawn into the
 map and must stay visible wherever the map is published.
 """
-import json, math, os, sys, urllib.parse, urllib.request
+import base64, json, math, os, sys, urllib.parse, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CACHE = os.path.join(HERE, 'assets', 'osm-cache.json')
@@ -24,6 +24,68 @@ KM_W, KM_H = 3.9, 2.6
 W, H = 900, 600
 
 NAVY, CRIMSON, INK, MUTED = '#123f6b', '#e50046', '#16233a', '#5b6b80'
+
+# Optional satellite inset of the clinic's immediate surroundings.
+# Needs a Mapbox access token:  MAPBOX_TOKEN=pk.xxx python3 build-map.py
+# Free satellite imagery (Sentinel-2) is 10 m per pixel, which at this scale
+# prints as mush, so there is no open-licence fallback worth drawing.
+MAPBOX_TOKEN = os.environ.get('MAPBOX_TOKEN', '')
+INSET_PX = 232          # size of the inset box on the map canvas
+INSET_ZOOM = 17         # ~1.06 m/px at this latitude -> about 245 m across
+INSET_CACHE = os.path.join(HERE, 'assets', 'clinic-satellite.png')
+
+
+def satellite_tile():
+    """Fetch (and cache) a satellite image centred on the clinic."""
+    if os.path.exists(INSET_CACHE):
+        return open(INSET_CACHE, 'rb').read()
+    if not MAPBOX_TOKEN:
+        return None
+    lat, lon = CLINIC
+    url = (f'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/'
+           f'{lon},{lat},{INSET_ZOOM},0/{INSET_PX}x{INSET_PX}@2x'
+           f'?access_token={MAPBOX_TOKEN}&attribution=false&logo=false')
+    req = urllib.request.Request(url, headers={'User-Agent': UA})
+    with urllib.request.urlopen(req, timeout=120) as r:
+        png = r.read()
+    open(INSET_CACHE, 'wb').write(png)
+    return png
+
+
+def inset_svg(x, y):
+    """The inset box, or a note saying why it is not there."""
+    png = satellite_tile()
+    size = INSET_PX
+    out = []
+    if png is None:
+        return [], False
+    b64 = base64.b64encode(png).decode()
+    out.append(f'<g>')
+    out.append(f'<clipPath id="insetclip"><rect x="{x}" y="{y}" width="{size}" '
+               f'height="{size}" rx="3"/></clipPath>')
+    out.append(f'<image x="{x}" y="{y}" width="{size}" height="{size}" '
+               f'clip-path="url(#insetclip)" preserveAspectRatio="xMidYMid slice" '
+               f'href="data:image/png;base64,{b64}"/>')
+    out.append(f'<rect x="{x}" y="{y}" width="{size}" height="{size}" rx="3" '
+               f'fill="none" stroke="{NAVY}" stroke-width="2"/>')
+    # the clinic sits at the centre of the fetched image by construction
+    cxi, cyi = x + size / 2, y + size / 2
+    out.append(f'<circle cx="{cxi}" cy="{cyi}" r="9" fill="none" stroke="#ffffff" '
+               f'stroke-width="2.5" opacity="0.95"/>')
+    out.append(f'<circle cx="{cxi}" cy="{cyi}" r="4" fill="{CRIMSON}" '
+               f'stroke="#ffffff" stroke-width="1.5"/>')
+    # scale: metres per pixel at this zoom and latitude
+    mpp = 156543.03392 * math.cos(math.radians(CLINIC[0])) / (2 ** INSET_ZOOM)
+    bar_m = 100
+    bar_px = bar_m / mpp
+    out.append(f'<rect x="{x+10}" y="{y+size-16}" width="{bar_px:.1f}" height="3.5" '
+               f'fill="#ffffff" opacity="0.9"/>')
+    out.append(f'<text x="{x+10+bar_px/2:.1f}" y="{y+size-20}" fill="#ffffff" '
+               f'font-size="11" text-anchor="middle" opacity="0.95">{bar_m} m</text>')
+    out.append(f'<text x="{x}" y="{y-7}" fill="{NAVY}" font-size="13" '
+               f'font-weight="650">Around the clinic</text>')
+    out.append('</g>')
+    return out, True
 
 QUERY = f"""
 [out:json][timeout:180];
@@ -163,9 +225,17 @@ def main():
     out.append(f'<text x="{nx}" y="{ny+15}" fill="{MUTED}" font-size="12" '
                f'text-anchor="middle">N</text>')
 
-    # required attribution
+    # satellite inset, top-left where the vector map is emptiest
+    inset, has_inset = inset_svg(22, 34)
+    out += inset
+
+    # required attribution — Mapbox imagery adds its own, and it is not optional
+    credit = ('© OpenStreetMap contributors · satellite © Mapbox © Maxar'
+              if has_inset else '© OpenStreetMap contributors')
     out.append(f'<text x="{W-10}" y="{H-10}" fill="{MUTED}" font-size="11" '
-               f'text-anchor="end" opacity="0.85">© OpenStreetMap contributors</text>')
+               f'text-anchor="end" opacity="0.85">{credit}</text>')
+    if not has_inset:
+        print('note: no MAPBOX_TOKEN set, so the satellite inset was skipped')
 
     out.append('</svg>')
     open(OUT, 'w').write('\n'.join(out))

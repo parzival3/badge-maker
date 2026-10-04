@@ -101,6 +101,25 @@ The clinic is at **27.690562, 85.389687**, decoded from the plus code
 inside the ward 8 boundary. The working area is OSM relation 16113837,
 "Madhyapur Thimi-08".
 
+### Satellite inset (optional)
+
+An inset of the clinic's immediate surroundings (about 245 m across) can be
+drawn into the top-left of the map. It needs a Mapbox access token, because
+there is no open-licence alternative worth printing: Sentinel-2 is free but
+10 m per pixel, which over this area works out at roughly 60 dpi.
+
+```sh
+MAPBOX_TOKEN=pk.xxxxx python3 documents/build-map.py
+```
+
+The fetched image is cached at `assets/clinic-satellite.png` and git-ignored;
+delete it to re-fetch. Without a token the inset is skipped and the script
+says so. Using the imagery adds "satellite © Mapbox © Maxar" to the credit
+line, which must stay visible.
+
+Do **not** substitute Google Maps or Google Earth imagery: their terms do not
+cover reuse in a printed leaflet that gets distributed.
+
 **The attribution is not optional.** OSM data is ODbL; "© OpenStreetMap
 contributors" is drawn into the map and must stay legible wherever it is
 published.
