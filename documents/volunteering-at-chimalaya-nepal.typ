@@ -155,15 +155,48 @@ the healthcare field, such as:
 
 Other relevant professional backgrounds are also considered.
 
-You will use your professional skills to promote health and prevent illness
-among infants and mothers, working alongside Nepalese colleagues who know the
-families and the area.
-
 #aside[
   As a volunteer, you will get straight to the heart of Nepalese homes — and
   meet some of the warmest, most welcoming people, who despite widespread
   poverty and limited resources carry themselves with immense dignity,
   spirituality, and hospitality.
+]
+
+== What you will be doing
+
+You will use your professional skills to promote health and prevent illness
+among infants and mothers. Most of that happens in people's homes, not in a
+consulting room.
+
+- *Home visits*, alongside the clinic's nurses — newborn examinations,
+  screening for danger signs, breastfeeding support, growth monitoring, and
+  handing over the Bag4Life bag at every first visit
+- *Mother-groups and pregnancy groups*, helping run workshops, nutrition
+  sessions and growth monitoring
+- *School and factory outreach*, with measurements, hygiene and health
+  education
+- *Training sessions* for local health workers, where your own background is
+  useful
+
+== What is expected
+
+- A background, or current study, in a relevant health field. The work is
+  clinical, with real families and real newborns.
+- Working *alongside* the Nepalese staff rather than apart from them. They
+  lead the visits, know the families, speak the language, and decide what
+  happens; you contribute to their work.
+- Readiness for low-resource settings. You will be in cramped homes and on
+  factory sites, without the equipment you are used to.
+- Respect for the families who let you in. Most live with very little and
+  receive you as a guest; the relationship is the reason the clinic reaches
+  them at all.
+
+#callout(title: "Ask the clinic before you apply", accent: brand.muted)[
+  These are not documented anywhere public, and matter for planning: the
+  minimum length of a placement, working days and hours, how much English is
+  spoken and whether interpreting is available, whether your professional
+  registration must be recognised in Nepal, what insurance you need, which
+  visa to travel on, and what vaccinations are required.
 ]
 
 #block(breakable: false, above: 1.3em)[
