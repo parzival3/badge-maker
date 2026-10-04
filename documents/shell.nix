@@ -22,8 +22,14 @@ let
   docs = toString ./.;
   root = toString ./..;
 
+  # nix-shell exports SOURCE_DATE_EPOCH=315532800 (1 Jan 1980) for reproducible
+  # builds, and typst honours it: every PDF came out stamped 1980, and
+  # datetime.today() returned 1980 inside documents. Use the real clock.
+  realClock = ''export SOURCE_DATE_EPOCH="$(date +%s)"'';
+
   build = pkgs.writeShellScriptBin "build" ''
     set -euo pipefail
+    ${realClock}
     cd ${docs}
     targets=( "$@" )
     if [ ''${#targets[@]} -eq 0 ]; then targets=( *.typ ); fi
@@ -36,6 +42,7 @@ let
 
   watch = pkgs.writeShellScriptBin "watch" ''
     set -euo pipefail
+    ${realClock}
     cd ${docs}
     f="''${1:-volunteering-at-chimalaya-nepal.typ}"
     exec ${pkgs.typst}/bin/typst watch --root ${root} "$f" "''${f%.typ}.pdf"
