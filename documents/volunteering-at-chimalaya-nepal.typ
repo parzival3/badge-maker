@@ -99,8 +99,9 @@ their infants under unhygienic conditions and very poor living standards.
   #v(1.5mm)
   #text(size: 8.5pt, fill: brand.muted)[
     The clinic at Bode, and ward 8 of Madhyapur Thimi, where Chimalaya works.
-    Dashed rings mark distance from the clinic. Map data ©~OpenStreetMap
-    contributors.
+    Dashed rings mark distance from the clinic; the inset covers about 245~m.
+    Map data ©~OpenStreetMap contributors, satellite imagery ©~Mapbox
+    ©~Maxar.
   ]
 ]
 

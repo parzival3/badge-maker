@@ -59,13 +59,16 @@ def inset_svg(x, y):
     out = []
     if png is None:
         return [], False
+    # Mapbox serves JPEG for satellite styles regardless of the requested
+    # extension, so sniff the magic bytes rather than assume PNG.
+    mime = 'image/jpeg' if png[:2] == b'\xff\xd8' else 'image/png'
     b64 = base64.b64encode(png).decode()
     out.append(f'<g>')
     out.append(f'<clipPath id="insetclip"><rect x="{x}" y="{y}" width="{size}" '
                f'height="{size}" rx="3"/></clipPath>')
     out.append(f'<image x="{x}" y="{y}" width="{size}" height="{size}" '
                f'clip-path="url(#insetclip)" preserveAspectRatio="xMidYMid slice" '
-               f'href="data:image/png;base64,{b64}"/>')
+               f'href="data:{mime};base64,{b64}"/>')
     out.append(f'<rect x="{x}" y="{y}" width="{size}" height="{size}" rx="3" '
                f'fill="none" stroke="{NAVY}" stroke-width="2"/>')
     # the clinic sits at the centre of the fetched image by construction
