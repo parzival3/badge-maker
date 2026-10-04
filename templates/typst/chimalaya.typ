@@ -164,7 +164,7 @@
   {
     if title != none {
       text(size: 11.5pt, weight: 700, fill: brand.navy, title)
-      v(2.8mm)
+      v(1.8mm)
     }
     if lead != none {
       text(size: 9pt, fill: brand.muted, lead)
