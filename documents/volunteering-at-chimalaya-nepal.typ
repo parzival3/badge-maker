@@ -231,17 +231,13 @@ families and the area.
   )
 ]
 
+#pagebreak()
+
 == Programmes alongside the home visits
 
 Home visiting is the core of the clinic's work, but not the whole of it. On
 top of the visits, the clinic runs a set of standing programmes, and
 volunteers take part in all of them:
-
-- *Mother-groups* — twice a week, for mothers with children aged 6–24 months
-- *Pregnancy groups* — group sessions for expectant mothers before the birth
-- *School programme* — health education and measurements in local schools
-- *Factory visits* — hygiene and health checks at brick and carpet factories
-- *Training and capacity building* — for local health workers and volunteers
 
 #card-grid(
   card(
@@ -286,18 +282,19 @@ volunteers take part in all of them:
 
     Among the highest-risk environments in the catchment area.
   ],
-)
+  card(
+    title: "Training and capacity building",
+    lead: "Strengthening the people who stay on after volunteers leave",
+  )[
+    - Home visit nurse training
+    - Female Community Health Volunteer (FCHV) training
+    - Breastfeeding counselling and parenting education
+    - Ongoing training of local health workers
+    - School teachers, to help them spot vulnerable children
 
-#card(
-  title: "Training and capacity building",
-  lead: "Strengthening the people who stay after the volunteers leave",
-  accent: brand.navy,
-)[
-  Chimalaya trains local health workers alongside its clinical work: Female
-  Community Health Volunteers, home visit nurses, and breastfeeding
-  counselling and parenting education during pregnancy. Volunteers often
-  contribute to these sessions as well as to visits.
-]
+    Volunteers often contribute to these sessions as well as to visits.
+  ],
+)
 
 = Practical information
 

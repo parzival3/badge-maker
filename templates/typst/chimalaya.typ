@@ -167,7 +167,7 @@
       v(0.2mm)
     }
     if lead != none {
-      text(size: 9pt, fill: brand.muted, lead)
+      text(size: 9pt, fill: brand.muted, hyphenate: false, lead)
       v(1.5mm)
     }
     set text(size: 9.5pt)
