@@ -94,6 +94,16 @@ outreach camps several times a month in impoverished mountain areas outside
 Kathmandu. We also visit brick and carpet factories, where women work with
 their infants under unhygienic conditions and very poor living standards.
 
+#block(breakable: false, above: 1.2em, below: 1.2em)[
+  #image("assets/clinic-map.svg", width: 100%)
+  #v(1.5mm)
+  #text(size: 8.5pt, fill: brand.muted)[
+    The clinic at Bode, and ward 8 of Madhyapur Thimi, where Chimalaya works.
+    Dashed rings mark distance from the clinic. Map data ©~OpenStreetMap
+    contributors.
+  ]
+]
+
 Our approach combines prevention and health promotion, with a strong focus on:
 
 - *Empowerment* of mothers and families

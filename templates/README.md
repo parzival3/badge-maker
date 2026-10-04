@@ -82,6 +82,29 @@ strength the brand crimson reads as a pink blotch behind body text.
 `cover` (set `cover: false` for a short note with no cover page). Colours are
 exposed as `brand.navy`, `brand.crimson` and so on.
 
+## The clinic locator map
+
+`documents/build-map.py` draws `documents/assets/clinic-map.svg` from
+OpenStreetMap data: ward 8 of Madhyapur Thimi shaded as the working area, the
+clinic marked, dashed rings for distance, and a scale bar.
+
+```sh
+python3 documents/build-map.py              # redraw from the cached data
+python3 documents/build-map.py --refresh    # re-fetch from Overpass first
+```
+
+The OSM response is cached in `documents/assets/osm-cache.json` so the build
+works offline and the map does not change under you.
+
+The clinic is at **27.690562, 85.389687**, decoded from the plus code
+`7MV7M9RQ+6V` (`M9RQ+6V Madhyapur Thimi`) — a 14 m cell, verified to fall
+inside the ward 8 boundary. The working area is OSM relation 16113837,
+"Madhyapur Thimi-08".
+
+**The attribution is not optional.** OSM data is ODbL; "© OpenStreetMap
+contributors" is drawn into the map and must stay legible wherever it is
+published.
+
 ## Organisation details
 
 `org-details` in `typst/chimalaya.typ` holds the name, Nepali name, tagline,
