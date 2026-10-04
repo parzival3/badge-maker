@@ -3,7 +3,7 @@
 //   typst compile --root . documents/volunteering-at-chimalaya-nepal.typ
 //
 // Background on the organisation is drawn from chimalayanepal.org (About CC).
-#import "../templates/typst/chimalaya.typ": chimalaya-doc, callout, brand, imprint
+#import "../templates/typst/chimalaya.typ": chimalaya-doc, callout, brand, imprint, card, card-grid
 
 #show: chimalaya-doc.with(
   title: "Volunteering at Chimalaya Nepal, 2027 Program",
@@ -171,27 +171,61 @@ families and the area.
   blanket, a thermometer, cloth diapers, and soap.
 ]
 
-== Mother-groups
+#card-grid(
+  card(
+    title: "Mother-groups",
+    lead: "Twice a week · mothers with children aged 6–24 months",
+  )[
+    - Health and hygiene workshops
+    - Nutrition courses, taught as cooking demonstrations
+    - Growth monitoring against the WHO growth standards
+    - Yoga classes
 
-Held twice a week for mothers with children aged 6–24 months.
+    A safe social network for knowledge sharing and peer support, carrying
+    families on from the final home visit until the child is about two.
+  ],
+  card(
+    title: "Pregnancy groups",
+    lead: "Group sessions · 10–12 expectant mothers at a time",
+  )[
+    - Pregnancy care and what to expect
+    - Breastfeeding awareness before the birth
+    - Delivery care and birth preparedness
+    - Each participant receives a pregnancy care bag
 
-/ Activities: Health and hygiene workshops, nutrition courses with cooking
-  demonstrations, growth monitoring, and yoga classes.
-/ Purpose: To create a safe social network for knowledge sharing and peer
-  support.
+    Reaching mothers before the birth means the first home visit is not the
+    first conversation.
+  ],
+  card(
+    title: "School programme",
+    lead: "Health education in local schools",
+  )[
+    - Height and weight measurements
+    - Dental hygiene
+    - General health education
+  ],
+  card(
+    title: "Factory visits",
+    lead: "Brick and carpet factories around the clinic",
+  )[
+    - Hygiene measures where families live on site
+    - Health checks for newborns and young children
+    - Contact with mothers who cannot easily reach the clinic
 
-// kept whole so the two items are not split across a page break
-#block(breakable: false)[
-  == School and factory outreach
+    Among the highest-risk environments in the catchment area.
+  ],
+)
 
-  / School programme: Height and weight measurements, dental hygiene, and
-    health education.
-  / Factory visits: Hygiene measures and health checks for newborns and
-    children living in high-risk environments at brick and carpet factories.
+#card(
+  title: "Training and capacity building",
+  lead: "Strengthening the people who stay after the volunteers leave",
+  accent: brand.navy,
+)[
+  Chimalaya trains local health workers alongside its clinical work: Female
+  Community Health Volunteers, home visit nurses, and breastfeeding
+  counselling and parenting education during pregnancy. Volunteers often
+  contribute to these sessions as well as to visits.
 ]
-
-
-#pagebreak()
 
 = Practical information
 
@@ -220,7 +254,7 @@ Held twice a week for mothers with children aged 6–24 months.
   with clinic staff, which lets you experience the local culture firsthand.
 
   #photo-placeholder(
-    height: 58mm,
+    height: 46mm,
     caption: [Photo of the accommodation — to be supplied],
   )
   #v(-1mm)
@@ -231,8 +265,10 @@ Held twice a week for mothers with children aged 6–24 months.
   ]
 ]
 
-= Contact
+#block(breakable: false)[
+  = Contact
 
-To apply, or to ask anything about a placement, write to the clinic:
+  To apply, or to ask anything about a placement, write to the clinic:
 
-#imprint()
+  #imprint()
+]

@@ -152,6 +152,37 @@
 )
 
 
+// A panel for one item in a set — a programme, a service, an option. Kept
+// unbreakable so a card never splits across a page.
+#let card(title: none, lead: none, accent: brand.crimson, body) = block(
+  width: 100%,
+  breakable: false,
+  fill: brand.wash,
+  stroke: (top: 2.5pt + accent),
+  radius: (bottom: 3pt),
+  inset: (x: 11pt, top: 9pt, bottom: 10pt),
+  {
+    if title != none {
+      text(size: 11.5pt, weight: 700, fill: brand.navy, title)
+      v(1.5mm, weak: true)
+    }
+    if lead != none {
+      text(size: 9pt, fill: brand.muted, lead)
+      v(2mm, weak: true)
+    }
+    set text(size: 9.5pt)
+    set par(justify: false, leading: 0.62em)
+    set list(marker: text(fill: accent)[•], spacing: 0.72em, indent: 2pt)
+    body
+  },
+)
+
+// Lay cards out in a grid; one row of two by default.
+#let card-grid(..cards, columns: 2) = block(
+  above: 1.1em, below: 1.1em,
+  grid(columns: columns * (1fr,), gutter: 5mm, ..cards.pos()),
+)
+
 // The full organisation imprint. Nepali documents are normally expected to
 // carry the registration numbers, so they are part of the block rather than
 // an afterthought.
