@@ -162,6 +162,9 @@
   radius: (bottom: 3pt),
   inset: (x: 11pt, top: 9pt, bottom: 10pt),
   {
+    // these have to precede the title and lead, or those stay justified and
+    // a short subtitle gets stretched across the whole card
+    set par(justify: false, leading: 0.62em)
     if title != none {
       text(size: 11.5pt, weight: 700, fill: brand.navy, title)
       v(0.2mm)
@@ -171,16 +174,18 @@
       v(1.5mm)
     }
     set text(size: 9.5pt)
-    set par(justify: false, leading: 0.62em)
     set list(marker: text(fill: accent)[•], spacing: 0.72em, indent: 2pt)
     body
   },
 )
 
-// Lay cards out in a grid; one row of two by default.
-#let card-grid(..cards, columns: 2) = block(
+// Flow cards down columns rather than into a fixed grid, so a short card is
+// followed immediately by the next one instead of leaving a hole where a
+// taller neighbour sets the row height.
+#let card-grid(..cards, count: 2, gutter: 5mm) = block(
   above: 1.1em, below: 1.1em,
-  grid(columns: columns * (1fr,), gutter: 5mm, ..cards.pos()),
+  columns(count, gutter: gutter,
+    cards.pos().map(c => block(below: gutter, breakable: false, c)).join()),
 )
 
 // The full organisation imprint. Nepali documents are normally expected to
