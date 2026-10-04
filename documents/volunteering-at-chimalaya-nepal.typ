@@ -166,6 +166,20 @@ families and the area.
   spirituality, and hospitality.
 ]
 
+#block(breakable: false, above: 1.3em)[
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 4mm,
+    image("assets/role-mother.jpg", width: 100%),
+    image("assets/role-handover.jpg", width: 100%),
+  )
+  #v(1.5mm)
+  #text(size: 8.5pt, fill: brand.muted)[
+    A mother and her baby with a Bag4Life bag, and a bag being handed over
+    at a visit.
+  ]
+]
+
 #pagebreak()
 
 = Clinical activities and programmes
@@ -322,15 +336,11 @@ volunteers take part in all of them:
   The clinic can arrange accommodation, either bed and breakfast or a homestay
   with clinic staff, which lets you experience the local culture firsthand.
 
-  #photo-placeholder(
-    height: 46mm,
-    caption: [Photo of the accommodation — to be supplied],
-  )
-  #v(-1mm)
+  #image("assets/accommodation.jpg", width: 100%)
+  #v(1.5mm)
   #text(size: 8.5pt, fill: brand.muted)[
-    A real photograph of the rooms belongs here. None is published on
-    chimalayanepal.org, and a stock image of someone else's guest house would
-    misrepresent what volunteers are booking.
+    A twin room, bathroom and kitchen, the terrace, and the house itself in
+    Bode.
   ]
 ]
 
