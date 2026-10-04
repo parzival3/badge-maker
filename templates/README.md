@@ -168,8 +168,19 @@ Inter and Noto Sans Devanagari fonts without installing anything system-wide:
 
 ```sh
 cd documents
-nix-shell --run build      # every .typ here -> .pdf
-nix-shell --run watch      # recompile on save
+nix-shell --run build                       # every .typ here -> .pdf beside it
+nix-shell --run watch                       # recompile on save
+nix-shell --run 'build -o ~/Downloads'      # PDFs into another directory
+nix-shell --run 'build -o ~/Downloads/Volunteering.pdf volunteering-at-chimalaya-nepal.typ'
+```
+
+Or run Typst yourself inside the shell, which has it on `PATH` with the fonts
+and the clock already set up:
+
+```sh
+cd documents
+nix-shell
+typst compile --root .. volunteering-at-chimalaya-nepal.typ ~/Downloads/out.pdf
 ```
 
 Or directly, if you have Typst and the fonts already:

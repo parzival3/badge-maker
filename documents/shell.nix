@@ -30,11 +30,37 @@ let
   build = pkgs.writeShellScriptBin "build" ''
     set -euo pipefail
     ${realClock}
+
+    # -o takes a directory (PDFs are named after the source) or a single
+    # output file. Without it, each PDF lands beside its .typ.
+    dest=""
+    while [ $# -gt 0 ]; do
+      case "$1" in
+        -o|--output) dest="$2"; shift 2 ;;
+        -h|--help)
+          echo "usage: build [-o DIR|FILE.pdf] [file.typ ...]"; exit 0 ;;
+        *) break ;;
+      esac
+    done
+
     cd ${docs}
     targets=( "$@" )
     if [ ''${#targets[@]} -eq 0 ]; then targets=( *.typ ); fi
+
+    if [ -n "$dest" ] && [ ''${#targets[@]} -gt 1 ] && [ "''${dest%.pdf}" != "$dest" ]; then
+      echo "build: -o FILE.pdf needs exactly one input, got ''${#targets[@]}" >&2
+      exit 1
+    fi
+
     for f in "''${targets[@]}"; do
-      out="''${f%.typ}.pdf"
+      if [ -z "$dest" ]; then
+        out="''${f%.typ}.pdf"
+      elif [ "''${dest%.pdf}" != "$dest" ]; then
+        out="$dest"
+      else
+        mkdir -p "$dest"
+        out="$dest/''${f%.typ}.pdf"
+      fi
       echo "typst: $f -> $out"
       ${pkgs.typst}/bin/typst compile --root ${root} "$f" "$out"
     done
@@ -57,7 +83,8 @@ pkgs.mkShell {
   TYPST_FONT_PATHS = "${fonts}/share/fonts";
 
   shellHook = ''
+    ${realClock}
     echo "typst $(${pkgs.typst}/bin/typst --version | cut -d' ' -f2) · fonts: Inter, Noto Sans Devanagari"
-    echo "commands: build [file.typ]   watch [file.typ]"
+    echo "commands: build [-o DIR|FILE.pdf] [file.typ]   watch [file.typ]"
   '';
 }
