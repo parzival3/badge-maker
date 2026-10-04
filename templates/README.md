@@ -112,6 +112,15 @@ there is no open-licence alternative worth printing: Sentinel-2 is free but
 MAPBOX_TOKEN=pk.xxxxx python3 documents/build-map.py
 ```
 
+build-map.py writes two maps, so you can pick:  (drawn map
+with a small satellite inset) and  (satellite
+imagery of the whole area with the ward outlined). The document shows both,
+labelled Version A and Version B; delete the block you do not want.
+
+The ward overlay on the satellite version is projected with the same Web
+Mercator transform Mapbox renders with, not the equirectangular one used for
+the drawn map, so the boundary lands exactly on the imagery.
+
 The fetched image is cached at `assets/clinic-satellite.png` and git-ignored;
 delete it to re-fetch. Without a token the inset is skipped and the script
 says so. Using the imagery adds "satellite © Mapbox © Maxar" to the credit
