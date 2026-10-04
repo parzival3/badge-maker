@@ -182,7 +182,7 @@ families and the area.
   table.header[Visit][When][What happens],
   [1st], [Shortly after birth],
   [General newborn examination (head-to-toe), screening for danger signs, and
-   breastfeeding guidance],
+   breastfeeding guidance. *The family is given a Bag4Life bag*],
   [2nd], [2 weeks],
   [Checking the well-being of both mother and baby; reinforcing breastfeeding
    techniques],
@@ -202,8 +202,8 @@ families and the area.
     gutter: 6mm,
     [
       Bag4Life is not only a bag. It is the whole package a family receives
-      when a baby is born in the clinic's area: a changing bag with
-      essentials in it, the home visits that follow, and an invitation to
+      when a baby is born in the clinic's area: a changing bag, handed over
+      at the first home visit, the visits that follow, and an invitation to
       join the mother-groups afterwards.
 
       The bag itself holds a baby blanket, a thermometer, cloth nappies and
@@ -212,8 +212,11 @@ families and the area.
       _sundhedsplejerske_, a health visitor, plays in Denmark, carried over
       to a setting where almost no family would otherwise see one.
 
-      It is the first thing a volunteer will hand over, and usually the
-      first reason a family lets you through the door.
+      *Every first visit means handing over a bag*, and as a volunteer that
+      will usually be you doing it. You arrive with the bag, go through what
+      is inside with the mother, and explain the visits that follow. It is
+      the opening of almost every relationship the clinic has with a family,
+      and often the reason you are welcomed into the house at all.
     ],
     [
       #photo-placeholder(
