@@ -194,9 +194,38 @@ families and the area.
    to join the clinic's mother-groups],
 )
 
-#callout(title: "Bag4life")[
-  At the first visit, families receive a bag containing essentials: a baby
-  blanket, a thermometer, cloth diapers, and soap.
+#block(breakable: false)[
+  == Bag4Life
+
+  #grid(
+    columns: (1.25fr, 1fr),
+    gutter: 6mm,
+    [
+      Bag4Life is not only a bag. It is the whole package a family receives
+      when a baby is born in the clinic's area: a changing bag with
+      essentials in it, the home visits that follow, and an invitation to
+      join the mother-groups afterwards.
+
+      The bag itself holds a baby blanket, a thermometer, cloth nappies and
+      soap. The visits bring a trained health professional into the home to
+      check on, support and advise mother and child — the role a
+      _sundhedsplejerske_, a health visitor, plays in Denmark, carried over
+      to a setting where almost no family would otherwise see one.
+
+      It is the first thing a volunteer will hand over, and usually the
+      first reason a family lets you through the door.
+    ],
+    [
+      #photo-placeholder(
+        height: 52mm,
+        caption: [Photo of a Bag4Life bag — to be supplied],
+      )
+      #v(-1mm)
+      #text(size: 8pt, fill: brand.muted)[
+        No photograph of the bag is published on either Chimalaya website.
+      ]
+    ],
+  )
 ]
 
 #card-grid(
