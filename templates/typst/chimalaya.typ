@@ -164,11 +164,11 @@
   {
     if title != none {
       text(size: 11.5pt, weight: 700, fill: brand.navy, title)
-      v(1.3mm)
+      v(0.2mm)
     }
     if lead != none {
       text(size: 9pt, fill: brand.muted, lead)
-      v(2.8mm)
+      v(1.5mm)
     }
     set text(size: 9.5pt)
     set par(justify: false, leading: 0.62em)

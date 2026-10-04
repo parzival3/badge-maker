@@ -231,6 +231,18 @@ families and the area.
   )
 ]
 
+== Programmes alongside the home visits
+
+Home visiting is the core of the clinic's work, but not the whole of it. On
+top of the visits, the clinic runs a set of standing programmes, and
+volunteers take part in all of them:
+
+- *Mother-groups* — twice a week, for mothers with children aged 6–24 months
+- *Pregnancy groups* — group sessions for expectant mothers before the birth
+- *School programme* — health education and measurements in local schools
+- *Factory visits* — hygiene and health checks at brick and carpet factories
+- *Training and capacity building* — for local health workers and volunteers
+
 #card-grid(
   card(
     title: "Mother-groups",
