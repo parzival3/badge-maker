@@ -13,6 +13,10 @@ new.
 | `bag-contents-soap-and-oil.png` | yak milk soap and baby massage oil together |
 | `bag-contents-thermometer-and-cotton.png` | thermometer and cotton wool together |
 | `textiles-trimmed.png` | the textiles, cropped to their bounding box |
+| `red_towel.png` | separated, cropped |
+| `changing_mat.png` | separated, cropped |
+| `reusable_diapers.png` | separated, cropped |
+| `bag-contents-row.png` | all seven items in one wide row — the source for the strip in the document |
 | `baby-massage-oil.png` | separated, cropped |
 | `yak-milk-soap.png` | separated, cropped |
 | `cotton-wool.png` | separated, cropped |
@@ -21,6 +25,9 @@ new.
 All have a real alpha channel, so they drop onto any background. The four
 separated objects were split out of the grouped photographs by looking for
 gaps in the alpha profile, then cropped to their own bounding box.
+
+The textiles are a towel, a changing mat and reusable nappies — worth noting,
+since from the photographs alone the first two read as blankets.
 
 **Scale is not consistent between the grouped photographs.** The textiles were
 shot from further back than the other items, so at native pixel size a bar of
