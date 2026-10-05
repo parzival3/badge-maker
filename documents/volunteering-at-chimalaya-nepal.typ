@@ -173,8 +173,9 @@ building and training of local health workers.
       at the first home visit, the visits that follow, and an invitation to
       join the mother-groups afterwards.
 
-      The bag itself holds a baby blanket, a thermometer, cloth nappies and
-      soap. The visits bring a trained health professional into the home to
+      The bag itself holds a blanket and a towel, cloth nappies, a digital
+      thermometer, cotton wool, yak milk lavender soap and baby massage oil —
+      the last two handmade in Nepal and carrying the clinic's own label. The visits bring a trained health professional into the home to
       check on, support and advise mother and child — the role a
       _sundhedsplejerske_, a health visitor, plays in Denmark, carried over
       to a setting where almost no family would otherwise see one.
@@ -196,6 +197,15 @@ building and training of local health workers.
 ]
 
 #pagebreak()
+
+#block(breakable: false, above: 1.1em, below: 1.3em)[
+  #image("assets/bag4life-contents.png", width: 100%)
+  #v(1mm)
+  #text(size: 8.5pt, fill: brand.muted)[
+    What is in the bag: a blanket and towel, cloth nappies, baby massage oil,
+    yak milk lavender soap, cotton wool and a digital thermometer.
+  ]
+]
 
 == Programmes alongside the home visits
 
