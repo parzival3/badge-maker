@@ -165,7 +165,7 @@ building and training of local health workers.
   == Bag4Life
 
   #grid(
-    columns: (1.25fr, 1fr),
+    columns: (1fr, 34mm),
     gutter: 6mm,
     [
       Bag4Life is not only a bag. It is the whole package a family receives
@@ -179,12 +179,6 @@ building and training of local health workers.
       check on, support and advise mother and child — the role a
       _sundhedsplejerske_, a health visitor, plays in Denmark, carried over
       to a setting where almost no family would otherwise see one.
-
-      *Every first visit means handing over a bag*, and as a volunteer that
-      will usually be you doing it. You arrive with the bag, go through what
-      is inside with the mother, and explain the visits that follow. It is
-      the opening of almost every relationship the clinic has with a family,
-      and often the reason you are welcomed into the house at all.
     ],
     [
       #image("assets/bag4life.png", width: 100%)
@@ -194,18 +188,29 @@ building and training of local health workers.
       ]
     ],
   )
+
+  #grid(
+    columns: (97mm, 1fr),
+    gutter: 6mm,
+    [
+      #image("assets/bag4life-contents.png", width: 100%)
+      #v(1mm)
+      #text(size: 8pt, fill: brand.muted)[
+        A blanket and towel, cloth nappies, baby massage oil, yak milk
+        lavender soap, cotton wool and a digital thermometer.
+      ]
+    ],
+    [
+      *Every first visit means handing over a bag*, and as a volunteer that
+      will usually be you doing it. You arrive with the bag, go through what
+      is inside with the mother, and explain the visits that follow. It is
+      the opening of almost every relationship the clinic has with a family,
+      and often the reason you are welcomed into the house at all.
+    ],
+  )
 ]
 
 #pagebreak()
-
-#block(breakable: false, above: 1.1em, below: 1.3em)[
-  #image("assets/bag4life-contents.png", width: 100%)
-  #v(1mm)
-  #text(size: 8.5pt, fill: brand.muted)[
-    What is in the bag: a blanket and towel, cloth nappies, baby massage oil,
-    yak milk lavender soap, cotton wool and a digital thermometer.
-  ]
-]
 
 == Programmes alongside the home visits
 
