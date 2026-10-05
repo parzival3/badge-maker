@@ -189,25 +189,19 @@ building and training of local health workers.
     ],
   )
 
-  #grid(
-    columns: (97mm, 1fr),
-    gutter: 6mm,
-    [
-      #image("assets/bag4life-contents.png", width: 100%)
-      #v(1mm)
-      #text(size: 8pt, fill: brand.muted)[
-        A blanket and towel, cloth nappies, baby massage oil, yak milk
-        lavender soap, cotton wool and a digital thermometer.
-      ]
-    ],
-    [
-      *Every first visit means handing over a bag*, and as a volunteer that
-      will usually be you doing it. You arrive with the bag, go through what
-      is inside with the mother, and explain the visits that follow. It is
-      the opening of almost every relationship the clinic has with a family,
-      and often the reason you are welcomed into the house at all.
-    ],
-  )
+  *Every first visit means handing over a bag*, and as a volunteer that will
+  usually be you doing it. You arrive with the bag, go through what is inside
+  with the mother, and explain the visits that follow. It is the opening of
+  almost every relationship the clinic has with a family, and often the reason
+  you are welcomed into the house at all.
+
+  #v(1mm)
+  #image("assets/bag4life-contents.png", width: 100%)
+  #v(1mm)
+  #text(size: 8pt, fill: brand.muted)[
+    A blanket and towel, cloth nappies, baby massage oil, yak milk lavender
+    soap, cotton wool and a digital thermometer.
+  ]
 ]
 
 #pagebreak()
