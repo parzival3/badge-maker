@@ -69,10 +69,10 @@ the help of the local community, they established the mothers' group clinic in
 Bode, Thimi, just outside Kathmandu.
 
 The clinic is the heart of our work. It covers a catchment area of about 25,000
-people — an area of small towns and many carpet and brick factories, where
-women do hard physical labour. For many locals the clinic and its staff are a
-safe and familiar setting, which makes it easier to reach the most vulnerable
-families.
+people across wards 8 and 9 of Madhyapur Thimi — an area of small towns and
+many carpet and brick factories, where women do hard physical labour. For many
+locals the clinic and its staff are a safe and familiar setting, which makes it
+easier to reach the most vulnerable families.
 
 Home visiting is one of the clinic's primary activities. Every newborn in the
 local area is offered a first visit, two further visits during the first month,
@@ -102,20 +102,20 @@ their infants under unhygienic conditions and very poor living standards.
 //   #image("assets/clinic-map.svg", width: 100%)
 //   #v(1.5mm)
 //   #text(size: 8.5pt, fill: brand.muted)[
-//     *Version A.* The clinic at Bode, and ward 8 of Madhyapur Thimi, where
-//     Chimalaya works. Dashed rings mark distance from the clinic; the inset
-//     covers about 245~m. Map data ©~OpenStreetMap contributors, satellite
-//     imagery ©~Mapbox ©~Maxar.
+//     *Version A.* The clinic at Bode, and wards 8 and 9 of Madhyapur Thimi,
+//     where Chimalaya works. Dashed rings mark distance from the clinic; the
+//     inset covers about 245~m. Map data ©~OpenStreetMap contributors,
+//     satellite imagery ©~Mapbox ©~Maxar.
 //   ]
 // ]
 
-// Version B: satellite imagery of the whole area, ward boundary drawn over it
+// Version B: satellite imagery of the whole area, ward boundaries drawn over it
 #block(breakable: false, above: 1.2em, below: 1.2em)[
   #image("assets/clinic-map-satellite.svg", width: 100%)
   #v(1.5mm)
   #text(size: 8.5pt, fill: brand.muted)[
-    The clinic at Bode, and ward 8 of Madhyapur Thimi, where Chimalaya
-    works. Dashed rings mark distance from the clinic. Map data
+    The clinic at Bode, and wards 8 and 9 of Madhyapur Thimi, where
+    Chimalaya works. Dashed rings mark distance from the clinic. Map data
     ©~OpenStreetMap contributors, satellite imagery ©~Mapbox ©~Maxar.
   ]
 ]

@@ -18,15 +18,18 @@ UA = 'chimalaya-doc-map/1.0 (+https://chimalayanepal.org)'
 # The clinic, from its plus code 7MV7M9RQ+6V (M9RQ+6V Madhyapur Thimi),
 # which decodes to a ~14 m cell and falls inside the ward 8 boundary.
 CLINIC = (27.690562, 85.389687)
-WARD_REL = 16113837          # OSM relation "Madhyapur Thimi-08"
+# OSM relations "Madhyapur Thimi-08" and "Madhyapur Thimi-09" — the two
+# wards Chimalaya works in.
+WARD_RELS = [16113837, 16113836]
 
-# map window: 4.8 km x 3.2 km around the ward
-CX, CY = 85.3905, 27.6935
-CLINIC_VIEW = (27.6945, 85.3905)
-KM_W, KM_H = 3.9, 2.6
-W, H = 900, 600
+# map window: wide and tall enough to hold both wards with margin
+CX, CY = 85.3905, 27.6885
+CLINIC_VIEW = (27.6885, 85.3905)
+KM_W, KM_H = 3.9, 3.6
+W, H = 900, 830
 
 NAVY, CRIMSON, INK, MUTED = '#123f6b', '#e50046', '#16233a', '#5b6b80'
+TEAL = '#00c8c8'
 
 # Optional satellite inset of the clinic's immediate surroundings.
 # Needs a Mapbox access token:  MAPBOX_TOKEN=pk.xxx python3 build-map.py
@@ -96,9 +99,9 @@ def inset_svg(x, y):
 QUERY = f"""
 [out:json][timeout:180];
 (
-  rel({WARD_REL});
-  way["highway"~"^(motorway|trunk|primary|secondary)$"]({CY-0.025},{CX-0.03},{CY+0.025},{CX+0.03});
-  node["place"~"^(town|suburb|village|neighbourhood)$"]({CY-0.025},{CX-0.03},{CY+0.025},{CX+0.03});
+  rel({');rel('.join(str(r) for r in WARD_RELS)});
+  way["highway"~"^(motorway|trunk|primary|secondary)$"]({CY-0.03},{CX-0.03},{CY+0.03},{CX+0.03});
+  node["place"~"^(town|suburb|village|neighbourhood)$"]({CY-0.03},{CX-0.03},{CY+0.03},{CX+0.03});
 );
 out geom;
 """
@@ -156,7 +159,7 @@ def esc(s):
 
 def main():
     els = load()['elements']
-    rel = next(e for e in els if e['type'] == 'relation')
+    rels = {e['id']: e for e in els if e['type'] == 'relation'}
     roads = [e for e in els if e['type'] == 'way' and 'highway' in e.get('tags', {})]
     places = [e for e in els if e['type'] == 'node']
 
@@ -185,11 +188,20 @@ def main():
         out.append(f'<text x="{cx:.1f}" y="{cy - km*per_km + 13:.1f}" fill="{NAVY}" '
                    f'opacity="0.55" font-size="13" text-anchor="middle">{km:g} km</text>')
 
-    # ward 8: the area Chimalaya works in
-    ring = ring_of(rel)
-    pts = ' '.join('%.1f,%.1f' % px(p['lon'], p['lat']) for p in ring)
-    out.append(f'<polygon points="{pts}" fill="{CRIMSON}" fill-opacity="0.10" '
-               f'stroke="{CRIMSON}" stroke-width="2.4" stroke-linejoin="round"/>')
+    # wards 8 and 9: the area Chimalaya works in
+    ward_style = [(WARD_RELS[0], CRIMSON, 'Ward 8'), (WARD_RELS[1], TEAL, 'Ward 9')]
+    for rel_id, col, label in ward_style:
+        ring = ring_of(rels[rel_id])
+        pts = ' '.join('%.1f,%.1f' % px(p['lon'], p['lat']) for p in ring)
+        out.append(f'<polygon points="{pts}" fill="{col}" fill-opacity="0.10" '
+                   f'stroke="{col}" stroke-width="2.4" stroke-linejoin="round"/>')
+        # label at the ring's centroid, nudged off the clinic marker if needed
+        xs, ys = zip(*(px(p['lon'], p['lat']) for p in ring))
+        lx, ly = sum(xs) / len(xs), sum(ys) / len(ys)
+        if math.hypot(lx - cx, ly - cy) < 60:
+            ly = cy + 60
+        out.append(f'<text x="{lx:.1f}" y="{ly:.1f}" fill="{col}" text-anchor="middle" '
+                   f'font-size="15" font-weight="700" opacity="0.9">{label}</text>')
 
     # place labels, skipping any that would sit on top of the clinic marker
     shown = {'Madhyapur Thimi', 'Sano Thimi', 'Nagdesh', 'Sirutar', 'Duwakot',
@@ -257,7 +269,7 @@ def main():
 # where it belongs rather than a few metres out.
 # --------------------------------------------------------------------------
 
-SAT_W, SAT_H = 900, 600
+SAT_W, SAT_H = 900, 830
 SAT_ZOOM = 15
 
 
@@ -304,7 +316,7 @@ def build_satellite(els):
               'satellite version of the map')
         return
 
-    rel = next(e for e in els if e['type'] == 'relation')
+    rels = {e['id']: e for e in els if e['type'] == 'relation'}
     places = [e for e in els if e['type'] == 'node']
 
     # the transform Mapbox used: centre of the image is CLINIC_VIEW at SAT_ZOOM
@@ -331,10 +343,17 @@ def build_satellite(els):
                    f'stroke="#ffffff" stroke-width="1.1" stroke-dasharray="4 6" opacity="0.5"/>')
         out += halo_text(cx, cy - km * per_km + 14, f'{km:g} km', 12, 400)
 
-    ring = ring_of(rel)
-    pts = ' '.join('%.1f,%.1f' % P(p['lon'], p['lat']) for p in ring)
-    out.append(f'<polygon points="{pts}" fill="{CRIMSON}" fill-opacity="0.18" '
-               f'stroke="{CRIMSON}" stroke-width="3" stroke-linejoin="round"/>')
+    ward_style = [(WARD_RELS[0], CRIMSON, 'Ward 8'), (WARD_RELS[1], TEAL, 'Ward 9')]
+    for rel_id, col, label in ward_style:
+        ring = ring_of(rels[rel_id])
+        pts = ' '.join('%.1f,%.1f' % P(p['lon'], p['lat']) for p in ring)
+        out.append(f'<polygon points="{pts}" fill="{col}" fill-opacity="0.18" '
+                   f'stroke="{col}" stroke-width="3" stroke-linejoin="round"/>')
+        xs, ys = zip(*(P(p['lon'], p['lat']) for p in ring))
+        lx, ly = sum(xs) / len(xs), sum(ys) / len(ys)
+        if math.hypot(lx - cx, ly - cy) < 60:
+            ly = cy + 60
+        out += halo_text(lx, ly, label, 15, 700, fill=col)
 
     shown = {'Madhyapur Thimi', 'Sano Thimi', 'Nagdesh', 'Sirutar', 'Duwakot',
              'Mulpani', 'Gatthaghar', 'Balkumari', 'Radhe Radhe', 'Magar Gaun'}
