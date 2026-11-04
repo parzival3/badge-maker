@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="1400"
+   height="336"
+   viewBox="0 0 1400 336"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs1"><style
+       id="style1">
+      .cls-1 {
+        fill: #123f6b;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: #e50046;
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+    </style></defs><g
+     id="g1"><g
+       id="g2"
+       transform="translate(-89.349859,348.12085)"><g
+         id="g3"
+         transform="matrix(1.294068,0,0,1.294068,101.03839,-334.22549)"><path
+           class="cls-1"
+           d="m 62.02,124.04 c 34.25,0 62.02,-27.77 62.02,-62.02 C 124.04,27.77 96.27,0 62.02,0 27.77,0 0,27.77 0,62.02 c 0,34.25 27.77,62.02 62.02,62.02"
+           id="path1" /><path
+           class="cls-3"
+           d="m 62.61,106.44 c -0.32,0.74 -0.84,0.74 -1.16,0 L 55.02,91.62 C 54.7,90.88 53.91,90.67 53.27,91.15 l -12.98,9.62 c -0.65,0.48 -1.1,0.22 -1,-0.58 l 1.87,-16.04 c 0.09,-0.8 -0.48,-1.37 -1.28,-1.28 l -16.02,1.86 c -0.8,0.09 -1.06,-0.36 -0.58,-1 L 32.9,70.79 c 0.48,-0.64 0.27,-1.43 -0.47,-1.75 L 17.66,62.65 c -0.74,-0.32 -0.74,-0.84 0,-1.16 L 32.43,55.1 c 0.74,-0.32 0.95,-1.11 0.47,-1.75 L 23.28,40.41 c -0.48,-0.65 -0.22,-1.1 0.58,-1 l 16.02,1.86 c 0.8,0.09 1.37,-0.48 1.28,-1.28 L 39.29,23.95 c -0.09,-0.8 0.36,-1.06 1,-0.58 l 12.98,9.62 c 0.65,0.48 1.43,0.27 1.75,-0.47 L 61.45,17.7 c 0.32,-0.74 0.84,-0.74 1.16,0 l 6.43,14.82 c 0.32,0.74 1.11,0.95 1.75,0.47 l 12.98,-9.62 c 0.65,-0.48 1.1,-0.22 1,0.58 L 82.9,39.99 c -0.09,0.8 0.48,1.37 1.28,1.28 l 16.02,-1.86 c 0.8,-0.09 1.06,0.36 0.58,1 l -9.62,12.94 c -0.48,0.64 -0.27,1.43 0.47,1.75 l 14.77,6.39 c 0.74,0.32 0.74,0.84 0,1.16 l -14.77,6.39 c -0.74,0.32 -0.95,1.11 -0.47,1.75 l 9.62,12.94 c 0.48,0.64 0.22,1.1 -0.58,1 L 84.18,82.87 c -0.8,-0.09 -1.37,0.48 -1.28,1.28 l 1.87,16.04 c 0.09,0.8 -0.36,1.06 -1,0.58 L 70.79,91.15 c -0.65,-0.48 -1.43,-0.27 -1.75,0.47 z"
+           id="path2" /><path
+           class="cls-2"
+           d="m 55.83,81.66 c 0.65,-0.48 1.43,-0.27 1.75,0.47 l 3.86,8.88 c 0.32,0.74 0.84,0.74 1.16,0 l 3.86,-8.88 c 0.32,-0.74 1.11,-0.95 1.75,-0.47 l 7.81,5.78 c 0.64,0.48 1.1,0.22 1,-0.58 L 75.9,77.23 c -0.09,-0.8 0.48,-1.37 1.28,-1.28 l 9.71,1.12 c 0.8,0.09 1.06,-0.36 0.58,-1 l -5.8,-7.81 c -0.48,-0.64 -0.27,-1.43 0.47,-1.75 l 8.98,-3.88 c 0.74,-0.32 0.74,-0.84 0,-1.16 L 82.14,57.59 C 81.4,57.27 81.19,56.48 81.67,55.84 l 5.8,-7.81 c 0.48,-0.64 0.22,-1.1 -0.58,-1 l -9.71,1.12 c -0.8,0.09 -1.37,-0.48 -1.28,-1.28 l 1.12,-9.63 c 0.09,-0.8 -0.36,-1.06 -1,-0.58 l -7.81,5.78 c -0.64,0.48 -1.43,0.27 -1.75,-0.47 L 62.6,33.09 c -0.32,-0.74 -0.84,-0.74 -1.16,0 l -3.86,8.88 c -0.32,0.74 -1.11,0.95 -1.75,0.47 l -7.81,-5.78 c -0.65,-0.48 -1.1,-0.22 -1,0.58 l 1.12,9.63 c 0.09,0.8 -0.48,1.37 -1.28,1.28 l -9.71,-1.12 c -0.8,-0.09 -1.06,0.36 -0.58,1 l 5.8,7.81 c 0.48,0.65 0.27,1.43 -0.47,1.75 l -8.98,3.88 c -0.74,0.32 -0.74,0.84 0,1.16 l 8.98,3.88 c 0.74,0.32 0.95,1.11 0.47,1.75 l -5.8,7.81 c -0.48,0.64 -0.22,1.1 0.58,1 l 9.71,-1.12 c 0.8,-0.09 1.37,0.48 1.28,1.28 l -1.12,9.63 c -0.09,0.8 0.36,1.06 1,0.58 z"
+           id="path3" /></g><text
+         xml:space="preserve"
+         style="font-size:95.4667px;line-height:0;font-family:Montserrat;-inkscape-font-specification:Montserrat;letter-spacing:-3.71px;word-spacing:-3.74px;writing-mode:lr-tb;direction:ltr;fill:#123f6b;fill-opacity:1"
+         x="340.3204"
+         y="-260.06183"
+         id="text2"><tspan
+           id="tspan2"
+           x="340.3204"
+           y="-260.06183"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:95.4667px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Heavy';letter-spacing:-3.71px">CHIMALAYA</tspan></text><text
+         xml:space="preserve"
+         style="font-size:95.4667px;line-height:0;font-family:Montserrat;-inkscape-font-specification:Montserrat;letter-spacing:-3.71px;word-spacing:-3.74px;writing-mode:lr-tb;direction:ltr;fill:#123f6b;fill-opacity:1"
+         x="338.44092"
+         y="-182.40714"
+         id="text2-5"><tspan
+           id="tspan2-4"
+           x="338.44092"
+           y="-182.40714"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:95.4667px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Heavy';letter-spacing:-3.71px">CHARITY</tspan></text><text
+         xml:space="preserve"
+         style="font-size:95.4667px;line-height:0;font-family:Montserrat;-inkscape-font-specification:Montserrat;letter-spacing:-3.71px;word-spacing:-3.74px;writing-mode:lr-tb;direction:ltr;fill:#e50046;fill-opacity:1"
+         x="340.57364"
+         y="-106.55908"
+         id="text2-5-0"><tspan
+           id="tspan2-4-7"
+           x="340.57364"
+           y="-106.55908"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:95.4667px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Heavy';letter-spacing:-3.71px;fill:#e50046;fill-opacity:1">IMPROVING</tspan></text><text
+         xml:space="preserve"
+         style="font-size:95.4667px;line-height:0;font-family:Montserrat;-inkscape-font-specification:Montserrat;letter-spacing:-3.71px;word-spacing:-3.74px;writing-mode:lr-tb;direction:ltr;fill:#e50046;fill-opacity:1"
+         x="338.5448"
+         y="-29.474459"
+         id="text2-5-0-0"><tspan
+           id="tspan2-4-7-6"
+           x="338.5448"
+           y="-29.474459"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:95.4667px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Heavy';letter-spacing:-3.71px;fill:#e50046;fill-opacity:1">AND</tspan></text><text
+         xml:space="preserve"
+         style="font-size:95.4667px;line-height:0;font-family:Montserrat;-inkscape-font-specification:Montserrat;letter-spacing:-3.71px;word-spacing:-3.74px;writing-mode:lr-tb;direction:ltr;fill:#e50046;fill-opacity:1"
+         x="586.63293"
+         y="-29.803875"
+         id="text2-5-0-0-6"><tspan
+           id="tspan2-4-7-6-4"
+           x="586.63293"
+           y="-29.803875"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:95.4667px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Heavy';letter-spacing:-3.71px;fill:#e50046;fill-opacity:1">CHILD</tspan></text><text
+         xml:space="preserve"
+         style="font-size:95.4667px;line-height:0;font-family:Montserrat;-inkscape-font-specification:Montserrat;letter-spacing:-3.71px;word-spacing:-3.74px;writing-mode:lr-tb;direction:ltr;fill:#e50046;fill-opacity:1"
+         x="912.99866"
+         y="-29.343653"
+         id="text2-5-0-0-6-8"><tspan
+           id="tspan2-4-7-6-4-7"
+           x="912.99866"
+           y="-29.343653"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:95.4667px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Heavy';letter-spacing:-3.71px;fill:#e50046;fill-opacity:1">HEALTH</tspan></text><text
+         xml:space="preserve"
+         style="font-size:95.4667px;line-height:0;font-family:Montserrat;-inkscape-font-specification:Montserrat;letter-spacing:-4.81px;word-spacing:-3.74px;writing-mode:lr-tb;direction:ltr;fill:#e50046;fill-opacity:1"
+         x="930.53894"
+         y="-105.95327"
+         id="text2-5-0-4"><tspan
+           id="tspan2-4-7-3"
+           x="930.53894"
+           y="-105.95327"
+           style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:95.4667px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Heavy';letter-spacing:-4.81px;fill:#e50046;fill-opacity:1">MATERNAL</tspan></text></g></g></svg>
