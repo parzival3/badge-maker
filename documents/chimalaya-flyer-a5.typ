@@ -37,6 +37,19 @@
   body
 }
 
+// Facebook and Instagram marks, as on the shelf banner: a navy disc with an f,
+// and an outlined rounded square with a lens. Sized to sit on the text line.
+#let social-icons = {
+  let d = 1.15em
+  box(baseline: 0.18em, circle(width: d, fill: brand.navy, inset: 0pt,
+    align(center + horizon, text(size: 0.8em, weight: 800, fill: white, baseline: -0.04em)[f])))
+  h(0.35em)
+  box(baseline: 0.18em, rect(width: d, height: d, radius: 0.3em, stroke: 0.7pt + brand.navy, inset: 0pt,
+    align(center + horizon, {
+      box(circle(width: 0.5em, stroke: 0.7pt + brand.navy))
+    })))
+}
+
 #let eyebrow(body) = text(size: 7pt, weight: 600, fill: brand.crimson, tracking: 0.14em, upper(body))
 
 // Full-bleed elements are placed in trim coordinates and run out by `bleed`.
@@ -136,7 +149,8 @@
       set text(size: 8pt)
       list(
         [Buy from the Chimalaya shelf here at Elephant House],
-        [Follow *\@chimalayacharity* on Facebook and Instagram],
+        [Follow #social-icons *\@chimalayacharity*],
+        [Find Elephant House: #social-icons *\@elephanthousenepal*],
         [Learn more, or volunteer with us, at *chimalayanepal.org*],
       )
     }, align(center, {
